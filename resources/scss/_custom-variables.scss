@@ -1,0 +1,49 @@
+$enable-gradients: true;
+$enable-negative-margins: true;
+
+$colors-primary: #00ffa2;       // Bright cyan, futuristic glow
+$colors-secondary: #32423b;     // Bold yellow-gold, inspired by Iron Man's power cores
+$colors-tertiary: #32423b;      // Energetic coral-red, for dynamic accents
+$colors-fourthiary: #5bc8af;    // Deep navy, grounding and high-tech feel
+
+// Supporting Colors
+$colors-accent: #00ffa2;        // Electric green, a secondary futuristic glow
+$colors-background-dark: #14181c; // Sleek dark background, Jarvis-inspired
+$colors-background-light: #e6e9ec; // Soft light gray, balancing contrast
+$colors-neutral: #8d99ae;       // Cool gray for text or subdued elements
+$colors-danger: #ff2e63;        // Neon red for alerts and warnings
+$colors-success: #20c20e;       // Bright green for confirmations
+$colors-info: #2088ff;          // Pure blue for informational tones
+
+
+
+$colors-white: #ffffff;
+$colors-success: #42ba96;
+$colors-danger: #dc3545;
+$colors-dark: #576574;
+
+$theme-colors: (
+    "primary": $colors-primary,
+    "secondary": $colors-secondary,
+    "tertiary": $colors-tertiary,
+    "fourthiary": $colors-fourthiary,
+    "success": $colors-success,
+    "danger": $colors-danger,
+    "dark": $colors-dark,
+);
+
+$enable-responsive-font-sizes: true;
+
+
+$nav-link-color: #506690 !default;
+$nav-link-font-weight: 600 !default;
+
+$form-label-color: #506690 !default;
+$form-label-font-weight: 600 !default;
+
+$link-color: $colors-primary !default;
+
+$modal-content-bg: $colors-secondary;
+$body-font-family: 'Nunito Sans', sans-serif;
+
+$enable-dark-mode: false;
