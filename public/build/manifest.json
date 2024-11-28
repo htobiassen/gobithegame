@@ -1,0 +1,22 @@
+{
+  "public/images/backgrounds/main.webp": {
+    "file": "assets/main-Dx7K7bcM.webp",
+    "src": "public/images/backgrounds/main.webp"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DJaue9V9.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DppKq5aY.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/scss/app.scss": {
+    "file": "assets/app-Docy6xZr.css",
+    "src": "resources/scss/app.scss",
+    "isEntry": true
+  }
+}
