@@ -7,7 +7,9 @@
                     Play <img src="{{ asset('images/favicon/favicon-32x32.png') }}" height="22px">
                 </a>
 
-                <a href="#" class="btn btn-outline-primary fs-6 fw-bold text-white" {{ Route::is('scoreboard') ? 'active' : '' }}>Scoreboard</a>
+                <a href="{{ route('scoreboard') }}" class="btn btn-outline-primary fs-6 fw-bold text-white {{ request()->is('scoreboard') ? 'active' : '' }}">
+                    Scoreboard
+                </a>
             </div>
         </ul>
 

@@ -337,6 +337,9 @@
         let lumberGoblinCost = 30;
         let goldGoblinCost = 30;
 
+        let lumberGoblinResurrectCost = 200;
+        let goldGoblinResurrectCost = 200;
+
         // Rocket Upgrade
         let rocketLevel = 1;
         let rocketCost = {
@@ -372,7 +375,8 @@
                 isMoving: false,
                 direction: 'toResource',
                 hp: 100,
-                maxHp: 100
+                maxHp: 100,
+                isDead: false
             };
             goblin.css({
                 top: goblinData.position.top,
@@ -598,26 +602,68 @@
 
         // Buy Goblins
         $('#buy-lumber-goblin').click(() => {
-            if (resources.gold >= lumberGoblinCost) {
-                resources.gold -= lumberGoblinCost;
-                $('#gold-count').text(resources.gold);
-                lumberGoblinCost = Math.floor(lumberGoblinCost * 1.3);
-                $('#lumber-goblin-cost').text(lumberGoblinCost);
-                addLumberGoblin();
-                updateButtons();
+            let deadLumberGoblins = lumberGoblins.filter(g => g.isDead);
+            if (lumberGoblins.length >= maxGoblins && deadLumberGoblins.length > 0) {
+                // Resurrect a dead goblin
+                if (resources.gold >= lumberGoblinResurrectCost) {
+                    resources.gold -= lumberGoblinResurrectCost;
+                    $('#gold-count').text(resources.gold);
+
+                    let goblinData = deadLumberGoblins[0];
+                    goblinData.isDead = false;
+                    goblinData.hp = goblinData.maxHp;
+                    goblinData.element.show();
+                    $('#lumber-goblin-count').text(lumberGoblins.filter(g => !g.isDead).length);
+
+                    startGoblin(goblinData);
+                    lumberGoblinResurrectCost = Math.floor(lumberGoblinResurrectCost * 1.5);
+                    updateButtons();
+                }
+            } else {
+                // Existing buy logic
+                if (resources.gold >= lumberGoblinCost) {
+                    resources.gold -= lumberGoblinCost;
+                    $('#gold-count').text(resources.gold);
+                    lumberGoblinCost = Math.floor(lumberGoblinCost * 1.3);
+                    $('#lumber-goblin-cost').text(lumberGoblinCost);
+                    addLumberGoblin();
+                    updateButtons();
+                }
             }
         });
 
+
         $('#buy-gold-goblin').click(() => {
-            if (resources.lumber >= goldGoblinCost) {
-                resources.lumber -= goldGoblinCost;
-                $('#lumber-count').text(resources.lumber);
-                goldGoblinCost = Math.floor(goldGoblinCost * 1.3);
-                $('#gold-goblin-cost').text(goldGoblinCost);
-                addGoldGoblin();
-                updateButtons();
+            let deadGoldGoblins = goldGoblins.filter(g => g.isDead);
+            if (goldGoblins.length >= maxGoblins && deadGoldGoblins.length > 0) {
+                // Resurrect a dead goblin
+                if (resources.lumber >= goldGoblinResurrectCost) {
+                    resources.lumber -= goldGoblinResurrectCost;
+                    $('#lumber-count').text(resources.lumber);
+
+                    let goblinData = deadGoldGoblins[0];
+                    goblinData.isDead = false;
+                    goblinData.hp = goblinData.maxHp;
+                    goblinData.element.show();
+                    $('#gold-goblin-count').text(goldGoblins.filter(g => !g.isDead).length);
+
+                    startGoblin(goblinData);
+                    goldGoblinResurrectCost = Math.floor(goldGoblinResurrectCost * 1.5);
+                    updateButtons();
+                }
+            } else {
+                // Existing buy logic
+                if (resources.lumber >= goldGoblinCost) {
+                    resources.lumber -= goldGoblinCost;
+                    $('#lumber-count').text(resources.lumber);
+                    goldGoblinCost = Math.floor(goldGoblinCost * 1.3);
+                    $('#gold-goblin-cost').text(goldGoblinCost);
+                    addGoldGoblin();
+                    updateButtons();
+                }
             }
         });
+
 
         // Upgrade Goblins
         $('#upgrade-lumber-speed').click(() => {
@@ -715,11 +761,37 @@
                 $('#rocket-cost-gold').text(rocketCost.gold);
                 alert('Rocket upgraded to level ' + rocketLevel + '!');
                 updateButtons();
+                clearTimeout(enemyInterval);
+                startEnemySpawn();
             }
         });
 
         // Update Buttons Based on Resources
         function updateButtons() {
+            // Check if there are dead lumber goblins
+            let deadLumberGoblins = lumberGoblins.filter(g => g.isDead);
+            let canResurrectLumberGoblin = deadLumberGoblins.length > 0;
+
+            if (lumberGoblins.length >= maxGoblins && canResurrectLumberGoblin) {
+                $('#buy-lumber-goblin').text('Resurrect');
+                $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinResurrectCost);
+            } else {
+                $('#buy-lumber-goblin').text('Buy');
+                $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
+            }
+
+            // Repeat for gold goblins
+            let deadGoldGoblins = goldGoblins.filter(g => g.isDead);
+            let canResurrectGoldGoblin = deadGoldGoblins.length > 0;
+
+            if (goldGoblins.length >= maxGoblins && canResurrectGoldGoblin) {
+                $('#buy-gold-goblin').text('Resurrect');
+                $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinResurrectCost);
+            } else {
+                $('#buy-gold-goblin').text('Buy');
+                $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost || goldGoblins.length >= maxGoblins);
+            }
+
             // Lumber Goblin Buttons
             $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
             $('#upgrade-lumber-speed').prop('disabled', resources.gold < lumberGoblinUpgrades.speedCost);
@@ -738,11 +810,20 @@
 
         // Enemy Spawn Function
         function startEnemySpawn() {
-            enemyInterval = setInterval(() => {
+            function spawnLoop() {
                 if (!gameRunning) return;
+
                 spawnEnemy();
-            }, 15000); // Spawn enemy every 15 seconds
+
+                // Decrease interval as rocket level increases
+                let spawnInterval = Math.max(15000 - (rocketLevel - 1) * 1000, 5000); // Minimum interval of 5 seconds
+
+                enemyInterval = setTimeout(spawnLoop, spawnInterval);
+            }
+
+            spawnLoop();
         }
+
 
         function spawnEnemy() {
             const enemy = $(`
@@ -794,7 +875,7 @@
             setTimeout(() => attackEffect.remove(), 500);
 
             // Calculate damage based on rocket level
-            let baseDamage = 8 + (rocketLevel - 1) * 2; // Increase damage by 2 for each rocket level
+            let baseDamage = 10 + (rocketLevel - 1) * 5; // Increase damage by 2 for each rocket level
             let resistanceLevel = targetGoblin.resourceType === 'lumber' ? lumberGoblinUpgrades.resistanceLevel : goldGoblinUpgrades.resistanceLevel;
             let damage = Math.max(baseDamage - resistanceLevel * 2, 5); // Minimum damage of 5
 
@@ -805,20 +886,24 @@
             $('#' + targetGoblin.id + '-hp-bar').css('width', hpPercent + '%');
 
             // Check if goblin is dead
+            // Check if goblin is dead
             if (targetGoblin.hp <= 0) {
-                targetGoblin.element.remove();
+                targetGoblin.isDead = true;
+                targetGoblin.element.hide(); // Hide the goblin from the map
+                targetGoblin.isMoving = false;
+
                 if (targetGoblin.resourceType === 'lumber') {
-                    lumberGoblins = lumberGoblins.filter(g => g.id !== targetGoblin.id);
-                    $('#lumber-goblin-count').text(lumberGoblins.length);
+                    $('#lumber-goblin-count').text(lumberGoblins.filter(g => !g.isDead).length);
                 } else {
-                    goldGoblins = goldGoblins.filter(g => g.id !== targetGoblin.id);
-                    $('#gold-goblin-count').text(goldGoblins.length);
+                    $('#gold-goblin-count').text(goldGoblins.filter(g => !g.isDead).length);
                 }
 
                 // Check if all goblins are dead
-                if (lumberGoblins.length === 0 && goldGoblins.length === 0) {
+                if (lumberGoblins.filter(g => !g.isDead).length === 0 && goldGoblins.filter(g => !g.isDead).length === 0) {
                     endGame();
                 }
+
+                updateButtons();
             }
         }
 
@@ -827,13 +912,37 @@
             gameRunning = false;
             clearInterval(enemyInterval);
             $('#pause-game').hide();
-            // Display Game Over Screen
-            $('#game-over-message').text('Game Over! You reached Rocket Level ' + rocketLevel + '.');
+
+            // Prompt the user to enter their name
+            let playerName = prompt('Game Over! You reached Rocket Level ' + rocketLevel + '.\nEnter your name to save your score:');
+
+            if (playerName !== null && playerName.trim() !== '') {
+                // Send the score to the server via AJAX
+                $.ajax({
+                    url: '/scores',
+                    method: 'POST',
+                    data: {
+                        name: playerName.trim(),
+                        rocket_level: rocketLevel,
+                        _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                    },
+                    success: function(response) {
+                        alert('Score saved successfully!');
+                        resetGame();
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while saving your score.');
+                        resetGame();
+                    }
+                });
+            } else {
+                // User didn't enter a name or canceled
+                resetGame();
+            }
+
+            // Update the Start Game button text
             $('#start-game').text('Restart Game');
             $('#start-screen').show();
-
-            // Reset Game State
-            resetGame();
         }
 
         // Reset Game State
@@ -847,24 +956,27 @@
                 speedLevel: 1,
                 carryLevel: 1,
                 resistanceLevel: 1,
-                speedCost: 20,
-                carryCost: 20,
-                resistanceCost: 10,
-                resistanceCostLumber: 10
+                speedCost: 10,
+                carryCost: 10,
+                resistanceCost: 8,
+                resistanceCostLumber: 8
             };
 
             goldGoblinUpgrades = {
                 speedLevel: 1,
                 carryLevel: 1,
                 resistanceLevel: 1,
-                speedCost: 20,
-                carryCost: 20,
-                resistanceCost: 10,
-                resistanceCostGold: 10
+                speedCost: 10,
+                carryCost: 10,
+                resistanceCost: 8,
+                resistanceCostGold: 8
             };
 
-            lumberGoblinCost = 50;
-            goldGoblinCost = 50;
+            lumberGoblinCost = 30;
+            goldGoblinCost = 30;
+
+            lumberGoblinResurrectCost = 200;
+            goldGoblinResurrectCost = 200;
 
             rocketLevel = 1;
             rocketCost = {
@@ -894,6 +1006,25 @@
         $(document).ready(() => {
             initGoblins();
             updateButtons();
+
+            // Warn user if they try to leave the page during the game
+            window.onbeforeunload = function() {
+                if (gameRunning) {
+                    return 'Are you sure you want to leave the game? Your progress will be lost.';
+                }
+            };
+
+            // Handle clicks on links to prompt the user
+            $(document).on('click', 'a', function(event) {
+                if (gameRunning) {
+                    let confirmLeave = confirm('Are you sure you want to leave the game? Your progress will be lost.');
+                    if (!confirmLeave) {
+                        event.preventDefault();
+                    }
+                }
+            });
         });
+
+
     </script>
 @endpush
