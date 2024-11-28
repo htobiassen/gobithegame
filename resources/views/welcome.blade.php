@@ -198,15 +198,7 @@
         cursor: not-allowed;
     }
 
-    /* Enemy Styles */
-    .enemy {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        font-size: 20px;
-        text-align: center;
-        user-select: none;
-    }
+
 
     /* Overlay Styles */
     .overlay {
@@ -272,6 +264,36 @@
     table.rounded tbody tr:last-child td:last-child {
         border-bottom-right-radius: 10px; /* Bottom-right corner */
     }
+    .enemy-container {
+        position: absolute; /* Position it within the map */
+        display: flex;
+        flex-direction: column; /* Stack the name above the image */
+        align-items: center; /* Center align name and image */
+        justify-content: center;
+        text-align: center;
+        pointer-events: none; /* Prevent interactions with the container */
+    }
+
+    .enemy-name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff; /* Adjust the color as needed */
+        margin: 0; /* Remove any unwanted margin */
+        line-height: 1.2; /* Control spacing if the name has multiple lines */
+        position: relative;
+        top: -45px; /* Adjust to move the name closer to the image if needed */
+    }
+
+    .enemy {
+        position: relative;
+        width: 30px; /* Adjust size of the enemy as needed */
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
 
 </style>
 @push('scripts')
@@ -340,12 +362,17 @@
                 id: goblinId,
                 element: goblin,
                 resourceType: 'lumber',
-                position: { top: '10%', left: '10%' },
+                position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
                 hp: 100,
                 maxHp: 100
             };
+            goblin.css({
+                top: goblinData.position.top,
+                left: goblinData.position.left,
+                transform: 'translate(-50%, -50%)'
+            });
             // Create health bar
             const hpBarContainer = $('<div class="goblin-hp-bar-container"></div>');
             const hpBar = $('<div class="goblin-hp-bar" id="' + goblinId + '-hp-bar"></div>');
@@ -370,12 +397,17 @@
                 id: goblinId,
                 element: goblin,
                 resourceType: 'gold',
-                position: { top: '10%', left: '80%' },
+                position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
                 hp: 100,
                 maxHp: 100
             };
+            goblin.css({
+                top: goblinData.position.top,
+                left: goblinData.position.left,
+                transform: 'translate(-50%, -50%)'
+            });
             // Create health bar
             const hpBarContainer = $('<div class="goblin-hp-bar-container"></div>');
             const hpBar = $('<div class="goblin-hp-bar" id="' + goblinId + '-hp-bar"></div>');
@@ -439,20 +471,46 @@
                 // Adjust speed based on remaining distance
                 let adjustedSpeed = baseSpeed * (distance / totalDistance);
 
+                // Calculate an offset based on goblin ID to prevent overlapping
+                let offsetX = parseInt(goblinData.id.split('-').pop()) * 10; // Adjust as needed
+                let offsetY = parseInt(goblinData.id.split('-').pop()) * 5;
+
+                // Apply offset to the target positions
+                let adjustedTargetPos = {
+                    left: targetPos.left + offsetX,
+                    top: targetPos.top + offsetY
+                };
+
                 // Start moving
                 goblin.animate({
-                    left: targetPos.left,
-                    top: targetPos.top
+                    left: adjustedTargetPos.left,
+                    top: adjustedTargetPos.top
                 }, adjustedSpeed, 'linear', () => {
                     if (goblinData.direction === 'toResource') {
-                        // Start collecting immediately
                         goblin.addClass('collecting');
-                        setTimeout(() => {
-                            goblin.removeClass('collecting');
-                            goblinData.direction = 'toRocket';
-                            goblinLoop(); // Continue loop after collecting
-                        }, 500);
-                    } else if (goblinData.direction === 'toRocket') {
+
+                        if (resourceType === 'gold') {
+                            // Fade out when reaching the gold mine
+                            goblin.fadeOut(500, () => {
+                                // Wait inside the mine
+                                setTimeout(() => {
+                                    // Fade in when leaving the gold mine
+                                    goblin.fadeIn(500, () => {
+                                        goblin.removeClass('collecting');
+                                        goblinData.direction = 'toRocket';
+                                        goblinLoop();
+                                    });
+                                }, 1500); // Time spent inside the mine
+                            });
+                        } else {
+                            // For lumber goblins, just wait
+                            setTimeout(() => {
+                                goblin.removeClass('collecting');
+                                goblinData.direction = 'toRocket';
+                                goblinLoop();
+                            }, 1500); // Wait time at the forest
+                        }
+                    }  else if (goblinData.direction === 'toRocket') {
                         // Deliver resources
                         resources[resourceType] += carryAmount;
                         $('#' + resourceType + '-count').text(resources[resourceType]);
@@ -669,7 +727,14 @@
         }
 
         function spawnEnemy() {
-            const enemy = $('<div class="enemy"><img src="../../images/game_assets/rafa.png"  height="120px"></div>');
+            const enemy = $(`
+                <div class="enemy-container">
+                    <div class="enemy-name">Rafa</div>
+                    <div class="enemy">
+                        <img src="../../images/game_assets/rafa.png" height="120px">
+                    </div>
+                </div>
+            `);
             enemy.css({
                 top: Math.random() * 80 + '%',
                 left: '-50px'
@@ -686,6 +751,7 @@
                 attackGoblin(enemy);
             }, 4000); // Enemy attacks at halfway point
         }
+
 
         function attackGoblin(enemy) {
             const allGoblins = lumberGoblins.concat(goldGoblins).filter(g => g.hp > 0);
