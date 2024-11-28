@@ -42,26 +42,26 @@
                         <tr>
                             <td>Number</td>
                             <td><span id="lumber-goblin-count">1</span></td>
-                            <td><span id="lumber-goblin-cost">50</span> 💰</td>
-                            <td><button class="btn btn-sm btn-success" id="buy-lumber-goblin">Buy</button></td>
+                            <td><span id="lumber-goblin-cost">30</span> 💰</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="buy-lumber-goblin">Buy</button></td>
                         </tr>
                         <tr>
                             <td>Speed</td>
                             <td><span id="lumber-speed-level">1</span></td>
-                            <td><span id="lumber-speed-cost">20</span> 💰</td>
-                            <td><button class="btn btn-sm btn-primary" id="upgrade-lumber-speed">Upgrade</button></td>
+                            <td><span id="lumber-speed-cost">10</span> 💰</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-speed">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Carry</td>
                             <td><span id="lumber-carry-level">1</span></td>
-                            <td><span id="lumber-carry-cost">20</span> 💰</td>
-                            <td><button class="btn btn-sm btn-primary" id="upgrade-lumber-carry">Upgrade</button></td>
+                            <td><span id="lumber-carry-cost">10</span> 💰</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-carry">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Resistance</td>
                             <td><span id="lumber-resistance-level">1</span></td>
-                            <td><span id="lumber-resistance-cost">10</span> 💰 <span id="lumber-resistance-cost-lumber">10</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-primary" id="upgrade-lumber-resistance">Upgrade</button></td>
+                            <td><span id="lumber-resistance-cost">8</span> 💰 <span id="lumber-resistance-cost-lumber">8</span> 🌲</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-resistance">Upgrade</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -78,26 +78,26 @@
                         <tr>
                             <td>Number</td>
                             <td><span id="gold-goblin-count">1</span></td>
-                            <td><span id="gold-goblin-cost">50</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-success" id="buy-gold-goblin">Buy</button></td>
+                            <td><span id="gold-goblin-cost">30</span> 🌲</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="buy-gold-goblin">Buy</button></td>
                         </tr>
                         <tr>
                             <td>Speed</td>
                             <td><span id="gold-speed-level">1</span></td>
-                            <td><span id="gold-speed-cost">20</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-primary" id="upgrade-gold-speed">Upgrade</button></td>
+                            <td><span id="gold-speed-cost">10</span> 🌲</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-speed">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Carry</td>
                             <td><span id="gold-carry-level">1</span></td>
-                            <td><span id="gold-carry-cost">20</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-primary" id="upgrade-gold-carry">Upgrade</button></td>
+                            <td><span id="gold-carry-cost">10</span> 🌲</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-carry">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Resistance</td>
                             <td><span id="gold-resistance-level">1</span></td>
-                            <td><span id="gold-resistance-cost">10</span> 🌲 <span id="gold-resistance-cost-gold">10</span> 💰</td>
-                            <td><button class="btn btn-sm btn-primary" id="upgrade-gold-resistance">Upgrade</button></td>
+                            <td><span id="gold-resistance-cost">8</span> 🌲 <span id="gold-resistance-cost-gold">8</span> 💰</td>
+                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-resistance">Upgrade</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -115,7 +115,7 @@
                             <td class="rounded-start-bottom">Level</td>
                             <td><span id="rocket-level">1</span></td>
                             <td><span id="rocket-cost-lumber">100</span> 🌲 <span id="rocket-cost-gold">100</span> 💰</td>
-                            <td class="rounded-end-bottom"><button class="btn btn-sm btn-danger" id="upgrade-rocket">Upgrade</button></td>
+                            <td class="rounded-end-bottom"><button class="btn btn-sm btn-fourthiary" id="upgrade-rocket">Upgrade</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -123,8 +123,12 @@
 
                     <!-- Control Buttons -->
                     <div class="mt-4 text-center">
-                        <button id="pause-game" class="btn btn-tertiary" style="display: none;">Pause Game</button>
-                        <button id="resume-game" class="btn btn-primary" style="display: none;">Resume Game</button>
+                        <button id="pause-game" class="btn btn-fourthiary" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
+                        </button>
+                        <button id="resume-game" class="btn btn-fourthiary" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -198,8 +202,6 @@
         cursor: not-allowed;
     }
 
-
-
     /* Overlay Styles */
     .overlay {
         position: absolute; /* Absolute positioning within the map-section */
@@ -264,6 +266,10 @@
     table.rounded tbody tr:last-child td:last-child {
         border-bottom-right-radius: 10px; /* Bottom-right corner */
     }
+    table td {
+        vertical-align: middle; /* Center content vertically */
+    }
+
     .enemy-container {
         position: absolute; /* Position it within the map */
         display: flex;
@@ -311,25 +317,25 @@
             speedLevel: 1,
             carryLevel: 1,
             resistanceLevel: 1,
-            speedCost: 20,
-            carryCost: 20,
-            resistanceCost: 10,
-            resistanceCostLumber: 10
+            speedCost: 10,
+            carryCost: 10,
+            resistanceCost: 8,
+            resistanceCostLumber: 8
         };
 
         let goldGoblinUpgrades = {
             speedLevel: 1,
             carryLevel: 1,
             resistanceLevel: 1,
-            speedCost: 20,
-            carryCost: 20,
-            resistanceCost: 10,
-            resistanceCostGold: 10
+            speedCost: 10,
+            carryCost: 10,
+            resistanceCost: 8,
+            resistanceCostGold: 8
         };
 
         // Goblin Purchase Costs
-        let lumberGoblinCost = 50;
-        let goldGoblinCost = 50;
+        let lumberGoblinCost = 30;
+        let goldGoblinCost = 30;
 
         // Rocket Upgrade
         let rocketLevel = 1;
@@ -438,6 +444,12 @@
             }
             const rocketPos = $('#rocket').position();
 
+            // Add an offset to adjust where goblins land at the rocket
+            const adjustedRocketPos = {
+                left: rocketPos.left + 30, // Move the goblin slightly to the right
+                top: rocketPos.top // Keep the vertical position the same
+            };
+
             function goblinLoop() {
                 if (!gameRunning || goblinData.hp <= 0) {
                     goblinData.isMoving = false;
@@ -455,7 +467,7 @@
                 if (goblinData.direction === 'toResource') {
                     targetPos = resourcePos;
                 } else if (goblinData.direction === 'toRocket') {
-                    targetPos = rocketPos;
+                    targetPos = adjustedRocketPos; // Use adjusted position for the rocket
                 }
 
                 // Calculate distance between current position and target
@@ -464,8 +476,8 @@
                 let distance = Math.sqrt(dx * dx + dy * dy);
 
                 // Calculate total distance between resource and rocket
-                let totalDx = resourcePos.left - rocketPos.left;
-                let totalDy = resourcePos.top - rocketPos.top;
+                let totalDx = resourcePos.left - adjustedRocketPos.left;
+                let totalDy = resourcePos.top - adjustedRocketPos.top;
                 let totalDistance = Math.sqrt(totalDx * totalDx + totalDy * totalDy);
 
                 // Adjust speed based on remaining distance
@@ -482,48 +494,54 @@
                 };
 
                 // Start moving
-                goblin.animate({
-                    left: adjustedTargetPos.left,
-                    top: adjustedTargetPos.top
-                }, adjustedSpeed, 'linear', () => {
-                    if (goblinData.direction === 'toResource') {
-                        goblin.addClass('collecting');
+                goblin.animate(
+                    {
+                        left: adjustedTargetPos.left,
+                        top: adjustedTargetPos.top
+                    },
+                    adjustedSpeed,
+                    'linear',
+                    () => {
+                        if (goblinData.direction === 'toResource') {
+                            goblin.addClass('collecting');
 
-                        if (resourceType === 'gold') {
-                            // Fade out when reaching the gold mine
-                            goblin.fadeOut(500, () => {
-                                // Wait inside the mine
+                            if (resourceType === 'gold') {
+                                // Fade out when reaching the gold mine
+                                goblin.fadeOut(500, () => {
+                                    // Wait inside the mine
+                                    setTimeout(() => {
+                                        // Fade in when leaving the gold mine
+                                        goblin.fadeIn(500, () => {
+                                            goblin.removeClass('collecting');
+                                            goblinData.direction = 'toRocket';
+                                            goblinLoop();
+                                        });
+                                    }, 1500); // Time spent inside the mine
+                                });
+                            } else {
+                                // For lumber goblins, just wait
                                 setTimeout(() => {
-                                    // Fade in when leaving the gold mine
-                                    goblin.fadeIn(500, () => {
-                                        goblin.removeClass('collecting');
-                                        goblinData.direction = 'toRocket';
-                                        goblinLoop();
-                                    });
-                                }, 1500); // Time spent inside the mine
-                            });
-                        } else {
-                            // For lumber goblins, just wait
-                            setTimeout(() => {
-                                goblin.removeClass('collecting');
-                                goblinData.direction = 'toRocket';
-                                goblinLoop();
-                            }, 1500); // Wait time at the forest
+                                    goblin.removeClass('collecting');
+                                    goblinData.direction = 'toRocket';
+                                    goblinLoop();
+                                }, 1500); // Wait time at the forest
+                            }
+                        } else if (goblinData.direction === 'toRocket') {
+                            // Deliver resources
+                            resources[resourceType] += carryAmount;
+                            $('#' + resourceType + '-count').text(resources[resourceType]);
+                            displayCounter(goblin, '+' + carryAmount);
+                            updateButtons();
+                            goblinData.direction = 'toResource';
+                            goblinLoop(); // Continue loop after delivering
                         }
-                    }  else if (goblinData.direction === 'toRocket') {
-                        // Deliver resources
-                        resources[resourceType] += carryAmount;
-                        $('#' + resourceType + '-count').text(resources[resourceType]);
-                        displayCounter(goblin, '+' + carryAmount);
-                        updateButtons();
-                        goblinData.direction = 'toResource';
-                        goblinLoop(); // Continue loop after delivering
                     }
-                });
+                );
             }
 
             goblinLoop();
         }
+
 
         // Display Counter Animation
         function displayCounter(goblin, text) {
