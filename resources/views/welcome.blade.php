@@ -334,8 +334,8 @@
         };
 
         // Goblin Purchase Costs
-        let lumberGoblinCost = 30;
-        let goldGoblinCost = 30;
+        let lumberGoblinCost = 1;
+        let goldGoblinCost = 1;
 
         let lumberGoblinResurrectCost = 200;
         let goldGoblinResurrectCost = 200;
@@ -349,9 +349,6 @@
 
         // Max Goblins
         const maxGoblins = 3;
-
-        // Enemy Variables
-        let enemyInterval;
 
         // Initialize Goblins
         function initGoblins() {
@@ -374,7 +371,7 @@
                 position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 100,
+                hp: 1,
                 maxHp: 100,
                 isDead: false
             };
@@ -410,7 +407,7 @@
                 position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 100,
+                hp: 1,
                 maxHp: 100
             };
             goblin.css({
@@ -568,11 +565,12 @@
         });
 
         // Pause Game
+        // Pause Game
         $('#pause-game').click(() => {
             gameRunning = false;
             $('#pause-game').hide();
             $('#resume-game').show();
-            // Pause animations
+            // Pause goblin animations
             lumberGoblins.forEach(g => {
                 g.element.stop(true);
                 g.isMoving = false;
@@ -581,11 +579,16 @@
                 g.element.stop(true);
                 g.isMoving = false;
             });
+            // Pause enemy animations
+            enemies.forEach(e => {
+                e.element.stop(true);
+            });
             // Stop enemy spawning
-            clearInterval(enemyInterval);
-            $('.enemy').remove();
+            clearTimeout(enemyInterval);
         });
 
+
+        // Resume Game
         // Resume Game
         $('#resume-game').click(() => {
             gameRunning = true;
@@ -597,8 +600,23 @@
             goldGoblins.forEach(g => {
                 startGoblin(g);
             });
+            // Resume enemy animations
+            enemies.forEach(e => {
+                let remainingDistance = $(window).width() - e.element.offset().left;
+                let remainingTime = (remainingDistance / $(window).width()) * 8000; // Adjust duration
+                e.element.animate({ left: '110%' }, {
+                    duration: remainingTime,
+                    easing: 'linear',
+                    complete: function() {
+                        e.element.remove();
+                        enemies = enemies.filter(en => en.element !== e.element);
+                    }
+                });
+            });
+            // Restart enemy spawning
             startEnemySpawn();
         });
+
 
         // Buy Goblins
         $('#buy-lumber-goblin').click(() => {
@@ -768,29 +786,34 @@
 
         // Update Buttons Based on Resources
         function updateButtons() {
-            // Check if there are dead lumber goblins
+            // Lumber Goblin Logic
             let deadLumberGoblins = lumberGoblins.filter(g => g.isDead);
             let canResurrectLumberGoblin = deadLumberGoblins.length > 0;
 
             if (lumberGoblins.length >= maxGoblins && canResurrectLumberGoblin) {
                 $('#buy-lumber-goblin').text('Resurrect');
+                $('#lumber-goblin-cost').text(lumberGoblinResurrectCost);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinResurrectCost);
             } else {
                 $('#buy-lumber-goblin').text('Buy');
+                $('#lumber-goblin-cost').text(lumberGoblinCost);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
             }
 
-            // Repeat for gold goblins
+            // Gold Goblin Logic
             let deadGoldGoblins = goldGoblins.filter(g => g.isDead);
             let canResurrectGoldGoblin = deadGoldGoblins.length > 0;
 
             if (goldGoblins.length >= maxGoblins && canResurrectGoldGoblin) {
                 $('#buy-gold-goblin').text('Resurrect');
+                $('#gold-goblin-cost').text(goldGoblinResurrectCost);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinResurrectCost);
             } else {
                 $('#buy-gold-goblin').text('Buy');
+                $('#gold-goblin-cost').text(goldGoblinCost);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost || goldGoblins.length >= maxGoblins);
             }
+
 
             // Lumber Goblin Buttons
             $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
@@ -825,6 +848,10 @@
         }
 
 
+        // Enemy Variables
+        let enemyInterval;
+        let enemies = []; // Array to keep track of active enemies
+
         function spawnEnemy() {
             const enemy = $(`
                 <div class="enemy-container">
@@ -841,15 +868,24 @@
             $('.map-section').append(enemy);
 
             // Move enemy across the screen
-            enemy.animate({ left: '110%' }, 8000, 'linear', () => {
-                enemy.remove();
+            const enemyAnimation = enemy.animate({ left: '110%' }, {
+                duration: 8000,
+                easing: 'linear',
+                complete: function() {
+                    enemy.remove();
+                    enemies = enemies.filter(e => e.element !== enemy);
+                }
             });
+
+            // Store enemy and its animation
+            enemies.push({ element: enemy, animation: enemyAnimation });
 
             // Enemy attacks a random goblin
             setTimeout(() => {
                 attackGoblin(enemy);
             }, 4000); // Enemy attacks at halfway point
         }
+
 
 
         function attackGoblin(enemy) {
