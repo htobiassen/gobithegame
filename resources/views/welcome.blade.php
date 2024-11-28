@@ -5,43 +5,39 @@
     @include('web.partials.navbar')
     <div class="container">
         <!-- Start Screen Overlay -->
-        <div class="card card-body mt-3">
-            <div id="start-screen" class="overlay">
-                <div class="overlay-content">
-                    <h2 id="game-over-message"></h2>
-                    <button id="start-game" class="btn btn-tertiary btn-lg">Start Game</button>
-                </div>
-            </div>
+        <div class="card card-body mt-3 bg-tertiary">
+
             <div class="row">
                 <!-- Map Section -->
-                <div class="col-md-8 position-relative">
-                    <div class="map-section">
-                        <div id="forest" class="map-item forest">Forest</div>
-                        <div id="mine" class="map-item mine">Gold Mine</div>
-                        <div id="rocket" class="map-item rocket">🚀</div>
+                <div class="col-md-12 position-relative">
+                    <div class="map-section rounded border border-1 border-primary">
+                        <!-- Start Screen Overlay -->
+                        <div id="start-screen" class="overlay">
+                            <div class="overlay-content">
+                                <h2 id="game-over-message"></h2>
+                                <button id="start-game" class="btn btn-tertiary btn-lg">Start Game</button>
+                            </div>
+                        </div>
+                        <!-- Game Elements -->
+                        <div id="forest" class="map-item forest"></div>
+                        <div id="mine" class="map-item mine"><img src="../../images/game_assets/goldmine_small.png"  height="180px"></div>
+                        <div id="rocket" class="map-item rocket"><img src="../../images/game_assets/rocket.png"  height="180px"></div>
                         <!-- Goblins will be dynamically added here -->
                     </div>
                     <!-- Resources Display -->
-                    <div class="resources-display">
+                    <div class="resources-display resources-display bg-primary p-1 rounded">
                         💰 <span id="gold-count">0</span> &nbsp;&nbsp; 🌲 <span id="lumber-count">0</span>
                     </div>
                 </div>
+
                 <!-- Upgrade Menu -->
-                <div class="col-md-4">
+                <div class="col-md-4 mt-3">
                     <!-- Upgrades Table -->
-                    <table class="table table-sm small table-secondary table-striped">
-                        <thead>
-                        <tr>
-                            <th>Skill</th>
-                            <th>Level</th>
-                            <th>Cost</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+                    <table class="table table-sm small table-secondary table-striped rounded border-0 mb-0">
                         <tbody>
                         <!-- Lumber Goblin Upgrades -->
-                        <tr>
-                            <td colspan="4" class="table-success text-center">Lumber Gobi's</td>
+                        <tr class="table-dark small">
+                            <td colspan="4" class="text-center rounded-top">🌲 Lumber Gobi's</td>
                         </tr>
                         <tr>
                             <td>Number</td>
@@ -67,9 +63,17 @@
                             <td><span id="lumber-resistance-cost">10</span> 💰 <span id="lumber-resistance-cost-lumber">10</span> 🌲</td>
                             <td><button class="btn btn-sm btn-primary" id="upgrade-lumber-resistance">Upgrade</button></td>
                         </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-md-4 mt-3">
+                    <!-- Upgrades Table -->
+                    <table class="table table-sm small table-secondary table-striped rounded border-0 mb-0">
+                        <tbody>
                         <!-- Gold Goblin Upgrades -->
-                        <tr>
-                            <td colspan="4" class="table-warning text-center">Gold Gobi's</td>
+                        <tr class="table-dark small">
+                            <td colspan="4" class="text-center rounded-top">💰 Gold Gobi's</td>
                         </tr>
                         <tr>
                             <td>Number</td>
@@ -95,18 +99,28 @@
                             <td><span id="gold-resistance-cost">10</span> 🌲 <span id="gold-resistance-cost-gold">10</span> 💰</td>
                             <td><button class="btn btn-sm btn-primary" id="upgrade-gold-resistance">Upgrade</button></td>
                         </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-md-4 mt-3">
+                    <!-- Upgrades Table -->
+                    <table class="table table-sm small table-secondary table-striped rounded border-0 mb-0">
+                        <tbody>
                         <!-- Rocket Upgrade -->
-                        <tr>
-                            <td colspan="4" class="table-danger text-center">Rocket Progress</td>
+                        <tr class="table-dark small">
+                            <td colspan="4" class="text-center rounded-top">Rocket</td>
                         </tr>
-                        <tr>
-                            <td>Level</td>
+                        <tr class="rounded-bottom">
+                            <td class="rounded-start-bottom">Level</td>
                             <td><span id="rocket-level">1</span></td>
                             <td><span id="rocket-cost-lumber">100</span> 🌲 <span id="rocket-cost-gold">100</span> 💰</td>
-                            <td><button class="btn btn-sm btn-danger" id="upgrade-rocket">Upgrade</button></td>
+                            <td class="rounded-end-bottom"><button class="btn btn-sm btn-danger" id="upgrade-rocket">Upgrade</button></td>
                         </tr>
                         </tbody>
                     </table>
+
+
                     <!-- Control Buttons -->
                     <div class="mt-4 text-center">
                         <button id="pause-game" class="btn btn-tertiary" style="display: none;">Pause Game</button>
@@ -119,11 +133,10 @@
 @endsection
 <style>
     .map-section {
-        background-color: #e0f7fa;
-        border: 2px solid #00796b;
-        height: 400px;
+        height: 600px;
         position: relative;
         overflow: hidden;
+        background-image: url("../../images/game_assets/game_background.jpeg");
     }
 
     .map-item {
@@ -137,19 +150,16 @@
     }
 
     .forest {
-        background-color: #388e3c;
         top: 10%;
         left: 10%;
     }
 
     .mine {
-        background-color: #ffca28;
-        top: 10%;
-        right: 10%;
+        top: 3%;
+        right: 7%;
     }
 
     .rocket {
-        background-color: #f44336;
         bottom: 10%;
         left: 50%;
         transform: translateX(-50%);
@@ -200,16 +210,16 @@
 
     /* Overlay Styles */
     .overlay {
-        position: fixed;
+        position: absolute; /* Absolute positioning within the map-section */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* Dimmed background */
+        z-index: 1000; /* Ensures it is above other elements in the map */
         display: flex;
         align-items: center;
         justify-content: center;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: 1000;
     }
 
     .overlay-content {
@@ -233,11 +243,11 @@
     /* Health Bar Styles */
     .goblin-hp-bar-container {
         position: absolute;
-        bottom: 100%; /* Position above the goblin */
+        top: -10px; /* Adjust to move the bar directly above the goblin */
         left: 50%;
-        transform: translateX(-50%);
-        width: 30px; /* Width of the health bar */
-        height: 5px; /* Height of the health bar */
+        transform: translateX(-30%);
+        width: 50px; /* Match the image width for alignment */
+        height: 5px;
         background-color: #ccc; /* Background color for the container */
         border: 1px solid #000;
         border-radius: 2px;
@@ -249,6 +259,20 @@
         width: 100%; /* Initially full */
         background-color: red;
     }
+
+    table.rounded {
+        border-radius: 10px; /* Adjust radius as needed */
+        overflow: hidden; /* Ensures content respects rounded corners */
+    }
+
+    table.rounded tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 10px; /* Bottom-left corner */
+    }
+
+    table.rounded tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 10px; /* Bottom-right corner */
+    }
+
 </style>
 @push('scripts')
     <script>
@@ -311,7 +335,7 @@
                 return;
             }
             const goblinId = 'lumber-goblin-' + (lumberGoblins.length + 1);
-            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '">🪓</div>');
+            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img src="../../images/game_assets/gobi.png"  height="60px"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -341,7 +365,7 @@
                 return;
             }
             const goblinId = 'gold-goblin-' + (goldGoblins.length + 1);
-            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '">⛏️</div>');
+            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"><img src="../../images/game_assets/gobi.png"  height="60px"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -376,6 +400,10 @@
             // Positions in pixels
             const resourceElement = resourceType === 'lumber' ? $('#forest') : $('#mine');
             const resourcePos = resourceElement.position();
+            if (resourceType === 'gold') {
+                resourcePos.top += 100; // Adjust the top offset
+                resourcePos.left += 50; // Adjust the left offset
+            }
             const rocketPos = $('#rocket').position();
 
             function goblinLoop() {
@@ -641,7 +669,7 @@
         }
 
         function spawnEnemy() {
-            const enemy = $('<div class="enemy">👾</div>');
+            const enemy = $('<div class="enemy"><img src="../../images/game_assets/rafa.png"  height="120px"></div>');
             enemy.css({
                 top: Math.random() * 80 + '%',
                 left: '-50px'
