@@ -334,8 +334,8 @@
         };
 
         // Goblin Purchase Costs
-        let lumberGoblinCost = 1;
-        let goldGoblinCost = 1;
+        let lumberGoblinCost = 30;
+        let goldGoblinCost = 30;
 
         let lumberGoblinResurrectCost = 200;
         let goldGoblinResurrectCost = 200;
@@ -371,7 +371,7 @@
                 position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 1,
+                hp: 100,
                 maxHp: 100,
                 isDead: false
             };
@@ -407,7 +407,7 @@
                 position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 1,
+                hp: 100,
                 maxHp: 100
             };
             goblin.css({
