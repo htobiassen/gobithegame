@@ -125,7 +125,7 @@
                         <tr class="rounded-bottom">
                             <td class="rounded-start-bottom">Level</td>
                             <td><span id="rocket-level">1</span></td>
-                            <td><span id="rocket-cost-lumber">80</span> 🌲 <span id="rocket-cost-gold">80</span> 💰</td>
+                            <td><span id="rocket-cost-lumber">70</span> 🌲 <span id="rocket-cost-gold">70</span> 💰</td>
                             <td class="rounded-end-bottom"><button class="btn btn-sm btn-fourthiary" id="upgrade-rocket">Upgrade</button></td>
                         </tr>
                         </tbody>
@@ -175,14 +175,14 @@
         let lumberGoblinCost = 20;
         let goldGoblinCost = 20;
 
-        let lumberGoblinResurrectCost = 80;
-        let goldGoblinResurrectCost = 80;
+        let lumberGoblinResurrectCost = 70;
+        let goldGoblinResurrectCost = 70;
 
         // Rocket Upgrade
         let rocketLevel = 1;
         let rocketCost = {
-            lumber: 80,
-            gold: 80
+            lumber: 70,
+            gold: 70
         };
 
         // Max Goblins
@@ -959,13 +959,13 @@
             lumberGoblinCost = 20;
             goldGoblinCost = 20;
 
-            lumberGoblinResurrectCost = 80;
-            goldGoblinResurrectCost = 80;
+            lumberGoblinResurrectCost = 70;
+            goldGoblinResurrectCost = 70;
 
             rocketLevel = 1;
             rocketCost = {
-                lumber: 80,
-                gold: 80
+                lumber: 70,
+                gold: 70
             };
 
             // Update UI
