@@ -149,6 +149,10 @@
         top: 5%;
         right: 1%;
     }
+    .forest {
+        top: 10%;
+        left: 10%;
+    }
     .goblin {
         position: absolute;
         width: 30px;
@@ -167,24 +171,19 @@
         .map-section {
             height: 600px;
         }
-
         .img-mine {
             height: 180px !important;
         }
-
         .mine {
             top: 3%;
             right: 7%;
         }
-
         .img-rocket {
             height: 230px !important;
         }
-
         .img-goblin {
             height: 60px !important;
         }
-
         .forest {
             top: 10%;
             left: 10%;
