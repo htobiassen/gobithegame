@@ -53,19 +53,19 @@
                         <tr>
                             <td>Number</td>
                             <td><span id="lumber-goblin-count">1</span>/<span id="lumber-max-goblins">3</span></td>
-                            <td><span id="lumber-goblin-cost">30</span> 💰</td>
+                            <td><span id="lumber-goblin-cost">20</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="buy-lumber-goblin">Buy</button></td>
                         </tr>
                         <tr>
                             <td>Speed</td>
                             <td><span id="lumber-speed-level">1 / 5</span></td>
-                            <td><span id="lumber-speed-cost">10</span> 💰</td>
+                            <td><span id="lumber-speed-cost">5</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-speed">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Carry</td>
                             <td><span id="lumber-carry-level">1 / 5</span></td>
-                            <td><span id="lumber-carry-cost">10</span> 💰</td>
+                            <td><span id="lumber-carry-cost">5</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-carry">Upgrade</button></td>
                         </tr>
                         <tr>
@@ -89,19 +89,19 @@
                         <tr>
                             <td>Number</td>
                             <td><span id="gold-goblin-count">1</span>/<span id="gold-max-goblins">3</span></td>
-                            <td><span id="gold-goblin-cost">30</span> 🌲</td>
+                            <td><span id="gold-goblin-cost">20</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="buy-gold-goblin">Buy</button></td>
                         </tr>
                         <tr>
                             <td>Speed</td>
                             <td><span id="gold-speed-level">1 / 5</span></td>
-                            <td><span id="gold-speed-cost">10</span> 🌲</td>
+                            <td><span id="gold-speed-cost">5</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-speed">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Carry</td>
                             <td><span id="gold-carry-level">1 / 5</span></td>
-                            <td><span id="gold-carry-cost">10</span> 🌲</td>
+                            <td><span id="gold-carry-cost">5</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-carry">Upgrade</button></td>
                         </tr>
                         <tr>
@@ -125,11 +125,15 @@
                         <tr class="rounded-bottom">
                             <td class="rounded-start-bottom">Level</td>
                             <td><span id="rocket-level">1</span></td>
-                            <td><span id="rocket-cost-lumber">100</span> 🌲 <span id="rocket-cost-gold">100</span> 💰</td>
+                            <td><span id="rocket-cost-lumber">80</span> 🌲 <span id="rocket-cost-gold">80</span> 💰</td>
                             <td class="rounded-end-bottom"><button class="btn btn-sm btn-fourthiary" id="upgrade-rocket">Upgrade</button></td>
                         </tr>
                         </tbody>
                     </table>
+                    <div class="mt-3 small text-white">
+                        Overall goal is to upgrade your Rocket.
+                        <br />Everytime rocket is upgraded Rafa is trying even harder to rug you.
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,8 +155,8 @@
             speedLevel: 1,
             carryLevel: 1,
             resistanceLevel: 1,
-            speedCost: 10,
-            carryCost: 10,
+            speedCost: 5,
+            carryCost: 5,
             resistanceCost: 8,
             resistanceCostLumber: 8
         };
@@ -161,24 +165,24 @@
             speedLevel: 1,
             carryLevel: 1,
             resistanceLevel: 1,
-            speedCost: 10,
-            carryCost: 10,
+            speedCost: 5,
+            carryCost: 5,
             resistanceCost: 8,
             resistanceCostGold: 8
         };
 
         // Goblin Purchase Costs
-        let lumberGoblinCost = 30;
-        let goldGoblinCost = 30;
+        let lumberGoblinCost = 20;
+        let goldGoblinCost = 20;
 
-        let lumberGoblinResurrectCost = 200;
-        let goldGoblinResurrectCost = 200;
+        let lumberGoblinResurrectCost = 80;
+        let goldGoblinResurrectCost = 80;
 
         // Rocket Upgrade
         let rocketLevel = 1;
         let rocketCost = {
-            lumber: 100,
-            gold: 100
+            lumber: 80,
+            gold: 80
         };
 
         // Max Goblins
@@ -869,7 +873,7 @@
             setTimeout(() => attackEffect.remove(), 500);
 
             // Calculate damage based on rocket level
-            let baseDamage = 10 + (rocketLevel - 1) * 5; // Increase damage by 2 for each rocket level
+            let baseDamage = 25 + (rocketLevel - 1) * 5; // Increase damage by 2 for each rocket level
             let resistanceLevel = targetGoblin.resourceType === 'lumber' ? lumberGoblinUpgrades.resistanceLevel : goldGoblinUpgrades.resistanceLevel;
             let damage = Math.max(baseDamage - resistanceLevel * 2, 5); // Minimum damage of 5
 
@@ -936,8 +940,8 @@
                 speedLevel: 1,
                 carryLevel: 1,
                 resistanceLevel: 1,
-                speedCost: 10,
-                carryCost: 10,
+                speedCost: 5,
+                carryCost: 5,
                 resistanceCost: 8,
                 resistanceCostLumber: 8
             };
@@ -946,22 +950,22 @@
                 speedLevel: 1,
                 carryLevel: 1,
                 resistanceLevel: 1,
-                speedCost: 10,
-                carryCost: 10,
+                speedCost: 5,
+                carryCost: 5,
                 resistanceCost: 8,
                 resistanceCostGold: 8
             };
 
-            lumberGoblinCost = 30;
-            goldGoblinCost = 30;
+            lumberGoblinCost = 20;
+            goldGoblinCost = 20;
 
-            lumberGoblinResurrectCost = 200;
-            goldGoblinResurrectCost = 200;
+            lumberGoblinResurrectCost = 80;
+            goldGoblinResurrectCost = 80;
 
             rocketLevel = 1;
             rocketCost = {
-                lumber: 100,
-                gold: 100
+                lumber: 80,
+                gold: 80
             };
 
             // Update UI
