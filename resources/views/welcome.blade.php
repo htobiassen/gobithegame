@@ -21,7 +21,7 @@
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
                         <div id="mine" class="map-item mine"><img class="img-mine" src="../../images/game_assets/goldmine.webp"></div>
-                        <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.png"></div>
+                        <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.webp"></div>
                         <!-- Goblins will be dynamically added here -->
                     </div>
 
@@ -135,219 +135,7 @@
         </div>
     </div>
 @endsection
-<style>
-    .img-mine {
-        height: 120px !important;
-    }
-    .img-rocket {
-        height: 150px !important;
-    }
-    .img-goblin {
-        height: 45px !important;
-    }
-    .mine {
-        top: 5%;
-        right: 1%;
-    }
-    .forest {
-        top: 10%;
-        left: 10%;
-    }
-    .goblin {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        font-size: 20px;
-        text-align: center;
-        user-select: none;
-    }
-    .map-section {
-        height: 500px;
-        position: relative;
-        overflow: hidden;
-        background-image: url("../../images/game_assets/game_background.jpeg");
-    }
-    @media (min-width: 768px) {
-        .map-section {
-            height: 600px;
-        }
-        .img-mine {
-            height: 180px !important;
-        }
-        .mine {
-            top: 3%;
-            right: 7%;
-        }
-        .img-rocket {
-            height: 230px !important;
-        }
-        .img-goblin {
-            height: 60px !important;
-        }
-        .forest {
-            top: 10%;
-            left: 10%;
-        }
-    }
 
-        .map-item {
-            position: absolute;
-            text-align: center;
-            font-weight: bold;
-            color: #fff;
-            padding: 10px;
-            border-radius: 50%;
-            user-select: none;
-        }
-
-        .rocket {
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .collecting {
-            animation: vibrate 0.3s infinite;
-        }
-
-        @keyframes vibrate {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(-1px, 1px);
-            }
-            50% {
-                transform: translate(1px, -1px);
-            }
-            75% {
-                transform: translate(-1px, -1px);
-            }
-            100% {
-                transform: translate(1px, 1px);
-            }
-        }
-
-        .delivery-counter {
-            position: absolute;
-            font-size: 16px;
-            color: #000;
-            font-weight: bold;
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        /* Overlay Styles */
-        .overlay {
-            position: absolute; /* Absolute positioning within the map-section */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Dimmed background */
-            z-index: 1000; /* Ensures it is above other elements in the map */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .overlay-content {
-            text-align: center;
-            color: #fff;
-        }
-
-        .overlay-content h2 {
-            margin-bottom: 20px;
-        }
-
-        /* Resources Display Styles */
-        .resources-display {
-            position: absolute;
-            top: 10px;
-            right: 55px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .control-btns-display {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        /* Health Bar Styles */
-        .goblin-hp-bar-container {
-            position: absolute;
-            top: -10px; /* Adjust to move the bar directly above the goblin */
-            left: 50%;
-            transform: translateX(-30%);
-            width: 50px; /* Match the image width for alignment */
-            height: 5px;
-            background-color: #ccc; /* Background color for the container */
-            border: 1px solid #000;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .goblin-hp-bar {
-            height: 100%;
-            width: 100%; /* Initially full */
-            background-color: red;
-        }
-
-        table.rounded {
-            border-radius: 10px; /* Adjust radius as needed */
-            overflow: hidden; /* Ensures content respects rounded corners */
-        }
-
-        table.rounded tbody tr:last-child td:first-child {
-            border-bottom-left-radius: 10px; /* Bottom-left corner */
-        }
-
-        table.rounded tbody tr:last-child td:last-child {
-            border-bottom-right-radius: 10px; /* Bottom-right corner */
-        }
-
-        table td {
-            vertical-align: middle; /* Center content vertically */
-        }
-
-        .enemy-container {
-            position: absolute; /* Position it within the map */
-            display: flex;
-            flex-direction: column; /* Stack the name above the image */
-            align-items: center; /* Center align name and image */
-            justify-content: center;
-            text-align: center;
-            pointer-events: none; /* Prevent interactions with the container */
-        }
-
-        .enemy-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff; /* Adjust the color as needed */
-            margin: 0; /* Remove any unwanted margin */
-            line-height: 1.2; /* Control spacing if the name has multiple lines */
-            position: relative;
-            top: -45px; /* Adjust to move the name closer to the image if needed */
-        }
-
-        .enemy {
-            position: relative;
-            width: 30px; /* Adjust size of the enemy as needed */
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-</style>
 @push('scripts')
     <script>
         // Game State
@@ -409,7 +197,7 @@
                 return;
             }
             const goblinId = 'lumber-goblin-' + (lumberGoblins.length + 1);
-            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.png"></div>');
+            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.webp"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -447,7 +235,7 @@
                 return;
             }
             const goblinId = 'gold-goblin-' + (goldGoblins.length + 1);
-            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.png"></div>');
+            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.webp"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -1022,7 +810,7 @@
                 <div class="enemy-container">
                     <div class="enemy-name">Rafa</div>
                     <div class="enemy">
-                        <img src="../../images/game_assets/rafa.png" height="120px">
+                        <img src="../../images/game_assets/rafa.webp" height="120px">
                     </div>
                 </div>
             `);

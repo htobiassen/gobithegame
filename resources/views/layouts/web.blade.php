@@ -7,6 +7,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="language" content="en">
 
+        <!-- Primary Meta Tags -->
+        <title>$GOBI the Game</title>
+        <meta name="description" content="$GOBI the Game is an exciting strategy game where you gather resources, upgrade goblins, and fend off sneaky enemies. Built for the $GOBI community!">
+        <meta name="keywords" content="$GOBI the Game, $GOBI Game, strategy game, goblins, resource gathering, crypto gaming, game development, Laravel game">
+        <meta name="author" content="@heintriss">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="$GOBI the Game">
+        <meta property="og:description" content="Dive into the world of $GOBI the Game! Manage goblins, collect resources, and defend against enemies in this fun, strategy game built for the $GOBI community.">
+        <meta property="og:image" content="{{ asset('images/backgrounds/main.webp') }}">
+        <meta property="og:url" content="https://gobithegame.com">
+        <meta property="og:type" content="website">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="$GOBI the Game">
+        <meta name="twitter:description" content="Play $GOBI the Game! Gather resources, upgrade goblins, and defend your base in this exciting game for the $GOBI community.">
+        <meta name="twitter:image" content="{{ asset('images/backgrounds/main.webp') }}">
+        <meta name="twitter:site" content="@Heintriss">
+        <meta name="twitter:creator" content="@Heintriss">
+
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 

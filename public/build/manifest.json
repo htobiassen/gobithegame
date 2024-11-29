@@ -3,8 +3,12 @@
     "file": "assets/main-Dx7K7bcM.webp",
     "src": "public/images/backgrounds/main.webp"
   },
+  "public/images/game_assets/game_background.webp": {
+    "file": "assets/game_background--cWRMHYh.webp",
+    "src": "public/images/game_assets/game_background.webp"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-DJaue9V9.css",
+    "file": "assets/app-Dt0ZIi4D.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -15,7 +19,7 @@
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-Docy6xZr.css",
+    "file": "assets/app-B6FVksF9.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }
