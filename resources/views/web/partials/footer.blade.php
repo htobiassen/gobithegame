@@ -17,12 +17,11 @@
 			</div>
 			<div class="col-12 col-lg-4 text-center text-md-start mb-5">
                 <div class="fw-bold text-uppercase text-tertiary mb-3">
-                    Credits
+                    Created by
                 </div>
                 <a href="https://twitter.com/heintriss" title="X" class="me-3 text-decoration-none text-tertiary" target="_blank">
                     Heintriss <i class="fa-brands fa-x-twitter fs-5 text-tertiary"></i>
                 </a>
-
 			</div>
 		</div>
 	</div>

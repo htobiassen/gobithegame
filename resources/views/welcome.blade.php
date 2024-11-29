@@ -3,9 +3,9 @@
 @endsection
 @section('content')
     @include('web.partials.navbar')
-    <div class="container">
+    <div class="container p-0 p-md-2 pb-3">
         <!-- Start Screen Overlay -->
-        <div class="card card-body mt-3 bg-tertiary">
+        <div class="card card-body mt-1 mt-md-3 bg-tertiary p-1 p-md-3">
 
             <div class="row">
                 <!-- Map Section -->
@@ -20,8 +20,8 @@
                         </div>
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
-                        <div id="mine" class="map-item mine"><img src="../../images/game_assets/goldmine.webp"  height="180px"></div>
-                        <div id="rocket" class="map-item rocket"><img src="../../images/game_assets/rocket.png"  height="230px"></div>
+                        <div id="mine" class="map-item mine"><img class="img-mine" src="../../images/game_assets/goldmine.webp"></div>
+                        <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.png"></div>
                         <!-- Goblins will be dynamically added here -->
                     </div>
 
@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                             <td>Number</td>
-                            <td><span id="lumber-goblin-count">1</span></td>
+                            <td><span id="lumber-goblin-count">1</span>/<span id="lumber-max-goblins">3</span></td>
                             <td><span id="lumber-goblin-cost">30</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="buy-lumber-goblin">Buy</button></td>
                         </tr>
@@ -88,7 +88,7 @@
                         </tr>
                         <tr>
                             <td>Number</td>
-                            <td><span id="gold-goblin-count">1</span></td>
+                            <td><span id="gold-goblin-count">1</span>/<span id="gold-max-goblins">3</span></td>
                             <td><span id="gold-goblin-cost">30</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="buy-gold-goblin">Buy</button></td>
                         </tr>
@@ -136,39 +136,19 @@
     </div>
 @endsection
 <style>
-    .map-section {
-        height: 600px;
-        position: relative;
-        overflow: hidden;
-        background-image: url("../../images/game_assets/game_background.jpeg");
+    .img-mine {
+        height: 120px !important;
     }
-
-    .map-item {
-        position: absolute;
-        text-align: center;
-        font-weight: bold;
-        color: #fff;
-        padding: 10px;
-        border-radius: 50%;
-        user-select: none;
+    .img-rocket {
+        height: 150px !important;
     }
-
-    .forest {
-        top: 10%;
-        left: 10%;
+    .img-goblin {
+        height: 45px !important;
     }
-
     .mine {
-        top: 3%;
-        right: 7%;
+        top: 5%;
+        right: 1%;
     }
-
-    .rocket {
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
     .goblin {
         position: absolute;
         width: 30px;
@@ -177,135 +157,195 @@
         text-align: center;
         user-select: none;
     }
-
-    .collecting {
-        animation: vibrate 0.3s infinite;
-    }
-
-    @keyframes vibrate {
-        0% { transform: translate(0, 0); }
-        25% { transform: translate(-1px, 1px); }
-        50% { transform: translate(1px, -1px); }
-        75% { transform: translate(-1px, -1px); }
-        100% { transform: translate(1px, 1px); }
-    }
-
-    .delivery-counter {
-        position: absolute;
-        font-size: 16px;
-        color: #000;
-        font-weight: bold;
-    }
-
-    button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-
-    /* Overlay Styles */
-    .overlay {
-        position: absolute; /* Absolute positioning within the map-section */
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* Dimmed background */
-        z-index: 1000; /* Ensures it is above other elements in the map */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .overlay-content {
-        text-align: center;
-        color: #fff;
-    }
-
-    .overlay-content h2 {
-        margin-bottom: 20px;
-    }
-
-    /* Resources Display Styles */
-    .resources-display {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 14px;
-        font-weight: bold;
-    }
-    .control-btns-display {
-        position: absolute;
-        top: 10px;
-        right: 105px;
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    /* Health Bar Styles */
-    .goblin-hp-bar-container {
-        position: absolute;
-        top: -10px; /* Adjust to move the bar directly above the goblin */
-        left: 50%;
-        transform: translateX(-30%);
-        width: 50px; /* Match the image width for alignment */
-        height: 5px;
-        background-color: #ccc; /* Background color for the container */
-        border: 1px solid #000;
-        border-radius: 2px;
+    .map-section {
+        height: 500px;
+        position: relative;
         overflow: hidden;
+        background-image: url("../../images/game_assets/game_background.jpeg");
+    }
+    @media (min-width: 768px) {
+        .map-section {
+            height: 600px;
+        }
+
+        .img-mine {
+            height: 180px !important;
+        }
+
+        .mine {
+            top: 3%;
+            right: 7%;
+        }
+
+        .img-rocket {
+            height: 230px !important;
+        }
+
+        .img-goblin {
+            height: 60px !important;
+        }
+
+        .forest {
+            top: 10%;
+            left: 10%;
+        }
     }
 
-    .goblin-hp-bar {
-        height: 100%;
-        width: 100%; /* Initially full */
-        background-color: red;
-    }
+        .map-item {
+            position: absolute;
+            text-align: center;
+            font-weight: bold;
+            color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            user-select: none;
+        }
 
-    table.rounded {
-        border-radius: 10px; /* Adjust radius as needed */
-        overflow: hidden; /* Ensures content respects rounded corners */
-    }
+        .rocket {
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-    table.rounded tbody tr:last-child td:first-child {
-        border-bottom-left-radius: 10px; /* Bottom-left corner */
-    }
+        .collecting {
+            animation: vibrate 0.3s infinite;
+        }
 
-    table.rounded tbody tr:last-child td:last-child {
-        border-bottom-right-radius: 10px; /* Bottom-right corner */
-    }
-    table td {
-        vertical-align: middle; /* Center content vertically */
-    }
+        @keyframes vibrate {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(-1px, 1px);
+            }
+            50% {
+                transform: translate(1px, -1px);
+            }
+            75% {
+                transform: translate(-1px, -1px);
+            }
+            100% {
+                transform: translate(1px, 1px);
+            }
+        }
 
-    .enemy-container {
-        position: absolute; /* Position it within the map */
-        display: flex;
-        flex-direction: column; /* Stack the name above the image */
-        align-items: center; /* Center align name and image */
-        justify-content: center;
-        text-align: center;
-        pointer-events: none; /* Prevent interactions with the container */
-    }
+        .delivery-counter {
+            position: absolute;
+            font-size: 16px;
+            color: #000;
+            font-weight: bold;
+        }
 
-    .enemy-name {
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff; /* Adjust the color as needed */
-        margin: 0; /* Remove any unwanted margin */
-        line-height: 1.2; /* Control spacing if the name has multiple lines */
-        position: relative;
-        top: -45px; /* Adjust to move the name closer to the image if needed */
-    }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-    .enemy {
-        position: relative;
-        width: 30px; /* Adjust size of the enemy as needed */
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        /* Overlay Styles */
+        .overlay {
+            position: absolute; /* Absolute positioning within the map-section */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dimmed background */
+            z-index: 1000; /* Ensures it is above other elements in the map */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .overlay-content {
+            text-align: center;
+            color: #fff;
+        }
+
+        .overlay-content h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Resources Display Styles */
+        .resources-display {
+            position: absolute;
+            top: 10px;
+            right: 55px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .control-btns-display {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Health Bar Styles */
+        .goblin-hp-bar-container {
+            position: absolute;
+            top: -10px; /* Adjust to move the bar directly above the goblin */
+            left: 50%;
+            transform: translateX(-30%);
+            width: 50px; /* Match the image width for alignment */
+            height: 5px;
+            background-color: #ccc; /* Background color for the container */
+            border: 1px solid #000;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .goblin-hp-bar {
+            height: 100%;
+            width: 100%; /* Initially full */
+            background-color: red;
+        }
+
+        table.rounded {
+            border-radius: 10px; /* Adjust radius as needed */
+            overflow: hidden; /* Ensures content respects rounded corners */
+        }
+
+        table.rounded tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 10px; /* Bottom-left corner */
+        }
+
+        table.rounded tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 10px; /* Bottom-right corner */
+        }
+
+        table td {
+            vertical-align: middle; /* Center content vertically */
+        }
+
+        .enemy-container {
+            position: absolute; /* Position it within the map */
+            display: flex;
+            flex-direction: column; /* Stack the name above the image */
+            align-items: center; /* Center align name and image */
+            justify-content: center;
+            text-align: center;
+            pointer-events: none; /* Prevent interactions with the container */
+        }
+
+        .enemy-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff; /* Adjust the color as needed */
+            margin: 0; /* Remove any unwanted margin */
+            line-height: 1.2; /* Control spacing if the name has multiple lines */
+            position: relative;
+            top: -45px; /* Adjust to move the name closer to the image if needed */
+        }
+
+        .enemy {
+            position: relative;
+            width: 30px; /* Adjust size of the enemy as needed */
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
 
 </style>
@@ -370,7 +410,7 @@
                 return;
             }
             const goblinId = 'lumber-goblin-' + (lumberGoblins.length + 1);
-            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img src="../../images/game_assets/gobi.png"  height="60px"></div>');
+            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.png"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -394,7 +434,9 @@
             goblin.append(hpBarContainer);
             $('.map-section').append(goblin);
             lumberGoblins.push(goblinData);
+            updateButtons();
             $('#lumber-goblin-count').text(lumberGoblins.length);
+            updateButtons();
             if (gameRunning) {
                 startGoblin(goblinData);
             }
@@ -406,7 +448,7 @@
                 return;
             }
             const goblinId = 'gold-goblin-' + (goldGoblins.length + 1);
-            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"><img src="../../images/game_assets/gobi.png"  height="60px"></div>');
+            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.png"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -429,7 +471,9 @@
             goblin.append(hpBarContainer);
             $('.map-section').append(goblin);
             goldGoblins.push(goblinData);
+            updateButtons();
             $('#gold-goblin-count').text(goldGoblins.length);
+            updateButtons();
             if (gameRunning) {
                 startGoblin(goblinData);
             }
@@ -647,8 +691,20 @@
 
         // Buy Goblins
         $('#buy-lumber-goblin').click(() => {
+            let aliveLumberGoblins = lumberGoblins.filter(g => !g.isDead);
             let deadLumberGoblins = lumberGoblins.filter(g => g.isDead);
-            if (lumberGoblins.length >= maxGoblins && deadLumberGoblins.length > 0) {
+
+            if (lumberGoblins.length < maxGoblins) {
+                // Buy new goblin
+                if (resources.gold >= lumberGoblinCost) {
+                    resources.gold -= lumberGoblinCost;
+                    $('#gold-count').text(resources.gold);
+                    lumberGoblinCost = Math.floor(lumberGoblinCost * 1.3);
+                    $('#lumber-goblin-cost').text(lumberGoblinCost);
+                    addLumberGoblin();
+                    updateButtons();
+                }
+            } else if (deadLumberGoblins.length > 0) {
                 // Resurrect a dead goblin
                 if (resources.gold >= lumberGoblinResurrectCost) {
                     resources.gold -= lumberGoblinResurrectCost;
@@ -658,29 +714,35 @@
                     goblinData.isDead = false;
                     goblinData.hp = goblinData.maxHp;
                     goblinData.element.show();
-                    $('#lumber-goblin-count').text(lumberGoblins.filter(g => !g.isDead).length);
+
+                    // Update HP bar to full
+                    $('#' + goblinData.id + '-hp-bar').css('width', '100%');
 
                     startGoblin(goblinData);
                     lumberGoblinResurrectCost = Math.floor(lumberGoblinResurrectCost * 1.5);
+                    $('#lumber-goblin-cost').text(lumberGoblinResurrectCost);
                     updateButtons();
                 }
             } else {
-                // Existing buy logic
-                if (resources.gold >= lumberGoblinCost) {
-                    resources.gold -= lumberGoblinCost;
-                    $('#gold-count').text(resources.gold);
-                    lumberGoblinCost = Math.floor(lumberGoblinCost * 1.3);
-                    $('#lumber-goblin-cost').text(lumberGoblinCost);
-                    addLumberGoblin();
-                    updateButtons();
-                }
+                alert('Maximum lumber goblins reached!');
             }
         });
 
-
         $('#buy-gold-goblin').click(() => {
+            let aliveGoldGoblins = goldGoblins.filter(g => !g.isDead);
             let deadGoldGoblins = goldGoblins.filter(g => g.isDead);
-            if (goldGoblins.length >= maxGoblins && deadGoldGoblins.length > 0) {
+
+            if (goldGoblins.length < maxGoblins) {
+                // Buy new goblin
+                if (resources.lumber >= goldGoblinCost) {
+                    resources.lumber -= goldGoblinCost;
+                    $('#lumber-count').text(resources.lumber);
+                    goldGoblinCost = Math.floor(goldGoblinCost * 1.3);
+                    $('#gold-goblin-cost').text(goldGoblinCost);
+                    addGoldGoblin();
+                    updateButtons();
+                }
+            } else if (deadGoldGoblins.length > 0) {
                 // Resurrect a dead goblin
                 if (resources.lumber >= goldGoblinResurrectCost) {
                     resources.lumber -= goldGoblinResurrectCost;
@@ -690,25 +752,19 @@
                     goblinData.isDead = false;
                     goblinData.hp = goblinData.maxHp;
                     goblinData.element.show();
-                    $('#gold-goblin-count').text(goldGoblins.filter(g => !g.isDead).length);
+
+                    // Update HP bar to full
+                    $('#' + goblinData.id + '-hp-bar').css('width', '100%');
 
                     startGoblin(goblinData);
                     goldGoblinResurrectCost = Math.floor(goldGoblinResurrectCost * 1.5);
+                    $('#gold-goblin-cost').text(goldGoblinResurrectCost);
                     updateButtons();
                 }
             } else {
-                // Existing buy logic
-                if (resources.lumber >= goldGoblinCost) {
-                    resources.lumber -= goldGoblinCost;
-                    $('#lumber-count').text(resources.lumber);
-                    goldGoblinCost = Math.floor(goldGoblinCost * 1.3);
-                    $('#gold-goblin-cost').text(goldGoblinCost);
-                    addGoldGoblin();
-                    updateButtons();
-                }
+                alert('Maximum gold goblins reached!');
             }
         });
-
 
         // Upgrade Goblins
         $('#upgrade-lumber-speed').click(() => {
@@ -845,39 +901,51 @@
         // Update Buttons Based on Resources
         function updateButtons() {
             // Lumber Goblin Logic
+            let aliveLumberGoblins = lumberGoblins.filter(g => !g.isDead);
             let deadLumberGoblins = lumberGoblins.filter(g => g.isDead);
-            let canResurrectLumberGoblin = deadLumberGoblins.length > 0;
 
-            if (lumberGoblins.length >= maxGoblins && canResurrectLumberGoblin) {
+            if (lumberGoblins.length < maxGoblins) {
+                // Can buy new goblin
+                $('#buy-lumber-goblin').text('Buy');
+                $('#lumber-goblin-cost').text(lumberGoblinCost);
+                $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost);
+            } else if (deadLumberGoblins.length > 0) {
+                // Can resurrect dead goblin
                 $('#buy-lumber-goblin').text('Resurrect');
                 $('#lumber-goblin-cost').text(lumberGoblinResurrectCost);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinResurrectCost);
             } else {
-                $('#buy-lumber-goblin').text('Buy');
-                $('#lumber-goblin-cost').text(lumberGoblinCost);
-                $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
+                // Cannot buy or resurrect
+                $('#buy-lumber-goblin').prop('disabled', true);
             }
 
-            // Gold Goblin Logic
-            let deadGoldGoblins = goldGoblins.filter(g => g.isDead);
-            let canResurrectGoldGoblin = deadGoldGoblins.length > 0;
+            // Update the goblin count display
+            $('#lumber-goblin-count').text(aliveLumberGoblins.length);
+            $('#lumber-max-goblins').text(maxGoblins);
 
-            if (goldGoblins.length >= maxGoblins && canResurrectGoldGoblin) {
+            // Gold Goblin Logic
+            let aliveGoldGoblins = goldGoblins.filter(g => !g.isDead);
+            let deadGoldGoblins = goldGoblins.filter(g => g.isDead);
+
+            if (goldGoblins.length < maxGoblins) {
+                // Can buy new goblin
+                $('#buy-gold-goblin').text('Buy');
+                $('#gold-goblin-cost').text(goldGoblinCost);
+                $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost);
+            } else if (deadGoldGoblins.length > 0) {
+                // Can resurrect dead goblin
                 $('#buy-gold-goblin').text('Resurrect');
                 $('#gold-goblin-cost').text(goldGoblinResurrectCost);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinResurrectCost);
             } else {
-                $('#buy-gold-goblin').text('Buy');
-                $('#gold-goblin-cost').text(goldGoblinCost);
-                $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost || goldGoblins.length >= maxGoblins);
+                // Cannot buy or resurrect
+                $('#buy-gold-goblin').prop('disabled', true);
             }
 
+            // Update the goblin count display
+            $('#gold-goblin-count').text(aliveGoldGoblins.length);
+            $('#gold-max-goblins').text(maxGoblins);
 
-            // Lumber Goblin Buttons
-            $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
-
-            // Gold Goblin Buttons
-            $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost || goldGoblins.length >= maxGoblins);
 
             let maxLevel = rocketLevel * 5;
 
@@ -1112,8 +1180,11 @@
             // Update UI
             $('#lumber-count').text(resources.lumber);
             $('#gold-count').text(resources.gold);
+            // Update goblin counts
             $('#lumber-goblin-count').text('0');
+            $('#lumber-max-goblins').text(maxGoblins);
             $('#gold-goblin-count').text('0');
+            $('#gold-max-goblins').text(maxGoblins);
             $('#rocket-level').text(rocketLevel);
             $('#rocket-cost-lumber').text(rocketCost.lumber);
             $('#rocket-cost-gold').text(rocketCost.gold);
@@ -1202,18 +1273,13 @@
             goblinData.element.stop(true, true); // Stop all animations
             goblinData.element.hide(); // Hide the goblin from the map
 
-            if (goblinData.resourceType === 'lumber') {
-                $('#lumber-goblin-count').text(lumberGoblins.filter(g => !g.isDead).length);
-            } else {
-                $('#gold-goblin-count').text(goldGoblins.filter(g => !g.isDead).length);
-            }
+            updateButtons(); // Update buttons and counts
 
             // Check if all goblins are dead
-            if (lumberGoblins.filter(g => !g.isDead).length === 0 && goldGoblins.filter(g => !g.isDead).length === 0) {
+            let allAliveGoblins = lumberGoblins.concat(goldGoblins).filter(g => !g.isDead);
+            if (allAliveGoblins.length === 0) {
                 endGame();
             }
-
-            updateButtons();
         }
 
 
