@@ -20,12 +20,23 @@
                         </div>
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
-                        <div id="mine" class="map-item mine"><img src="../../images/game_assets/goldmine_small.png"  height="180px"></div>
-                        <div id="rocket" class="map-item rocket"><img src="../../images/game_assets/rocket.png"  height="180px"></div>
+                        <div id="mine" class="map-item mine"><img src="../../images/game_assets/goldmine.webp"  height="180px"></div>
+                        <div id="rocket" class="map-item rocket"><img src="../../images/game_assets/rocket.png"  height="230px"></div>
                         <!-- Goblins will be dynamically added here -->
                     </div>
+
+
+                    <!-- Control Buttons -->
+                    <div class="control-btns-display">
+                        <button id="pause-game" class="btn btn-sm btn-secondary p-1" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
+                        </button>
+                        <button id="resume-game" class="btn btn-sm btn-primary p-1" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                        </button>
+                    </div>
                     <!-- Resources Display -->
-                    <div class="resources-display resources-display bg-primary p-1 rounded">
+                    <div class="resources-display bg-primary p-1 rounded">
                         💰 <span id="gold-count">0</span> &nbsp;&nbsp; 🌲 <span id="lumber-count">0</span>
                     </div>
                 </div>
@@ -47,19 +58,19 @@
                         </tr>
                         <tr>
                             <td>Speed</td>
-                            <td><span id="lumber-speed-level">1</span></td>
+                            <td><span id="lumber-speed-level">1 / 5</span></td>
                             <td><span id="lumber-speed-cost">10</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-speed">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Carry</td>
-                            <td><span id="lumber-carry-level">1</span></td>
+                            <td><span id="lumber-carry-level">1 / 5</span></td>
                             <td><span id="lumber-carry-cost">10</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-carry">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Resistance</td>
-                            <td><span id="lumber-resistance-level">1</span></td>
+                            <td><span id="lumber-resistance-level">1 / 5</span></td>
                             <td><span id="lumber-resistance-cost">8</span> 💰 <span id="lumber-resistance-cost-lumber">8</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-resistance">Upgrade</button></td>
                         </tr>
@@ -83,19 +94,19 @@
                         </tr>
                         <tr>
                             <td>Speed</td>
-                            <td><span id="gold-speed-level">1</span></td>
+                            <td><span id="gold-speed-level">1 / 5</span></td>
                             <td><span id="gold-speed-cost">10</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-speed">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Carry</td>
-                            <td><span id="gold-carry-level">1</span></td>
+                            <td><span id="gold-carry-level">1 / 5</span></td>
                             <td><span id="gold-carry-cost">10</span> 🌲</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-carry">Upgrade</button></td>
                         </tr>
                         <tr>
                             <td>Resistance</td>
-                            <td><span id="gold-resistance-level">1</span></td>
+                            <td><span id="gold-resistance-level">1 / 5</span></td>
                             <td><span id="gold-resistance-cost">8</span> 🌲 <span id="gold-resistance-cost-gold">8</span> 💰</td>
                             <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-resistance">Upgrade</button></td>
                         </tr>
@@ -119,17 +130,6 @@
                         </tr>
                         </tbody>
                     </table>
-
-
-                    <!-- Control Buttons -->
-                    <div class="mt-4 text-center">
-                        <button id="pause-game" class="btn btn-fourthiary" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
-                        </button>
-                        <button id="resume-game" class="btn btn-fourthiary" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -230,6 +230,13 @@
         position: absolute;
         top: 10px;
         right: 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .control-btns-display {
+        position: absolute;
+        top: 10px;
+        right: 105px;
         font-size: 14px;
         font-weight: bold;
     }
@@ -430,7 +437,7 @@
 
         // Start Goblin Movement
         function startGoblin(goblinData) {
-            if (goblinData.isMoving) return; // Prevent multiple loops
+            if (goblinData.isMoving || goblinData.isDead) return; // Prevent multiple loops or if goblin is dead
             goblinData.isMoving = true;
 
             const goblin = goblinData.element;
@@ -509,10 +516,13 @@
                             if (resourceType === 'gold') {
                                 // Fade out when reaching the gold mine
                                 goblin.fadeOut(500, () => {
+                                    if (goblinData.isDead) return; // Check if goblin is dead
                                     // Wait inside the mine
                                     setTimeout(() => {
+                                        if (goblinData.isDead) return; // Check if goblin is dead
                                         // Fade in when leaving the gold mine
                                         goblin.fadeIn(500, () => {
+                                            if (goblinData.isDead) return; // Check if goblin is dead
                                             goblin.removeClass('collecting');
                                             goblinData.direction = 'toRocket';
                                             goblinLoop();
@@ -522,6 +532,7 @@
                             } else {
                                 // For lumber goblins, just wait
                                 setTimeout(() => {
+                                    if (goblinData.isDead) return; // Check if goblin is dead
                                     goblin.removeClass('collecting');
                                     goblinData.direction = 'toRocket';
                                     goblinLoop();
@@ -565,7 +576,6 @@
         });
 
         // Pause Game
-        // Pause Game
         $('#pause-game').click(() => {
             gameRunning = false;
             $('#pause-game').hide();
@@ -582,10 +592,21 @@
             // Pause enemy animations
             enemies.forEach(e => {
                 e.element.stop(true);
+                if (e.attackTimeout) {
+                    clearTimeout(e.attackTimeout);
+                    e.attackTimeout = null;
+                }
             });
             // Stop enemy spawning
             clearTimeout(enemyInterval);
+
+            // Calculate time remaining to next enemy spawn
+            if (nextEnemySpawnTime) {
+                timeRemainingToNextEnemy = nextEnemySpawnTime - Date.now();
+                if (timeRemainingToNextEnemy < 0) timeRemainingToNextEnemy = 0;
+            }
         });
+
 
 
         // Resume Game
@@ -612,6 +633,12 @@
                         enemies = enemies.filter(en => en.element !== e.element);
                     }
                 });
+                // Reschedule attack
+                let elapsedTime = 8000 - remainingTime;
+                let attackTime = Math.max(4000 - elapsedTime, 0);
+                e.attackTimeout = setTimeout(() => {
+                    attackGoblin(e.element);
+                }, attackTime);
             });
             // Restart enemy spawning
             startEnemySpawn();
@@ -685,6 +712,11 @@
 
         // Upgrade Goblins
         $('#upgrade-lumber-speed').click(() => {
+            let maxLevel = rocketLevel * 5;
+            if (lumberGoblinUpgrades.speedLevel >= maxLevel) {
+                alert('Max level reached! Upgrade your rocket to increase max level.');
+                return;
+            }
             if (resources.gold >= lumberGoblinUpgrades.speedCost) {
                 resources.gold -= lumberGoblinUpgrades.speedCost;
                 $('#gold-count').text(resources.gold);
@@ -697,6 +729,11 @@
         });
 
         $('#upgrade-lumber-carry').click(() => {
+            let maxLevel = rocketLevel * 5;
+            if (lumberGoblinUpgrades.carryLevel >= maxLevel) {
+                alert('Max level reached! Upgrade your rocket to increase max level.');
+                return;
+            }
             if (resources.gold >= lumberGoblinUpgrades.carryCost) {
                 resources.gold -= lumberGoblinUpgrades.carryCost;
                 $('#gold-count').text(resources.gold);
@@ -709,6 +746,11 @@
         });
 
         $('#upgrade-lumber-resistance').click(() => {
+            let maxLevel = rocketLevel * 5;
+            if (lumberGoblinUpgrades.resistanceLevel >= maxLevel) {
+                alert('Max level reached! Upgrade your rocket to increase max level.');
+                return;
+            }
             if (resources.gold >= lumberGoblinUpgrades.resistanceCost && resources.lumber >= lumberGoblinUpgrades.resistanceCostLumber) {
                 resources.gold -= lumberGoblinUpgrades.resistanceCost;
                 resources.lumber -= lumberGoblinUpgrades.resistanceCostLumber;
@@ -725,6 +767,11 @@
         });
 
         $('#upgrade-gold-speed').click(() => {
+            let maxLevel = rocketLevel * 5;
+            if (goldGoblinUpgrades.speedLevel >= maxLevel) {
+                alert('Max level reached! Upgrade your rocket to increase max level.');
+                return;
+            }
             if (resources.lumber >= goldGoblinUpgrades.speedCost) {
                 resources.lumber -= goldGoblinUpgrades.speedCost;
                 $('#lumber-count').text(resources.lumber);
@@ -737,6 +784,11 @@
         });
 
         $('#upgrade-gold-carry').click(() => {
+            let maxLevel = rocketLevel * 5;
+            if (goldGoblinUpgrades.carryLevel >= maxLevel) {
+                alert('Max level reached! Upgrade your rocket to increase max level.');
+                return;
+            }
             if (resources.lumber >= goldGoblinUpgrades.carryCost) {
                 resources.lumber -= goldGoblinUpgrades.carryCost;
                 $('#lumber-count').text(resources.lumber);
@@ -749,6 +801,11 @@
         });
 
         $('#upgrade-gold-resistance').click(() => {
+            let maxLevel = rocketLevel * 5;
+            if (goldGoblinUpgrades.resistanceLevel >= maxLevel) {
+                alert('Max level reached! Upgrade your rocket to increase max level.');
+                return;
+            }
             if (resources.lumber >= goldGoblinUpgrades.resistanceCost && resources.gold >= goldGoblinUpgrades.resistanceCostGold) {
                 resources.lumber -= goldGoblinUpgrades.resistanceCost;
                 resources.gold -= goldGoblinUpgrades.resistanceCostGold;
@@ -779,6 +836,7 @@
                 $('#rocket-cost-gold').text(rocketCost.gold);
                 alert('Rocket upgraded to level ' + rocketLevel + '!');
                 updateButtons();
+                updateLevelDisplays();
                 clearTimeout(enemyInterval);
                 startEnemySpawn();
             }
@@ -817,18 +875,42 @@
 
             // Lumber Goblin Buttons
             $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost || lumberGoblins.length >= maxGoblins);
-            $('#upgrade-lumber-speed').prop('disabled', resources.gold < lumberGoblinUpgrades.speedCost);
-            $('#upgrade-lumber-carry').prop('disabled', resources.gold < lumberGoblinUpgrades.carryCost);
-            $('#upgrade-lumber-resistance').prop('disabled', resources.gold < lumberGoblinUpgrades.resistanceCost || resources.lumber < lumberGoblinUpgrades.resistanceCostLumber);
 
             // Gold Goblin Buttons
             $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost || goldGoblins.length >= maxGoblins);
-            $('#upgrade-gold-speed').prop('disabled', resources.lumber < goldGoblinUpgrades.speedCost);
-            $('#upgrade-gold-carry').prop('disabled', resources.lumber < goldGoblinUpgrades.carryCost);
-            $('#upgrade-gold-resistance').prop('disabled', resources.lumber < goldGoblinUpgrades.resistanceCost || resources.gold < goldGoblinUpgrades.resistanceCostGold);
+
+            let maxLevel = rocketLevel * 5;
+
+            // Lumber Goblin Upgrades
+            $('#upgrade-lumber-speed')
+                .prop('disabled', resources.gold < lumberGoblinUpgrades.speedCost || lumberGoblinUpgrades.speedLevel >= maxLevel)
+                .attr('title', lumberGoblinUpgrades.speedLevel >= maxLevel ? 'Max level reached. Upgrade your rocket to increase max level.' : '');
+
+            $('#upgrade-lumber-carry')
+                .prop('disabled', resources.gold < lumberGoblinUpgrades.carryCost || lumberGoblinUpgrades.carryLevel >= maxLevel)
+                .attr('title', lumberGoblinUpgrades.carryLevel >= maxLevel ? 'Max level reached. Upgrade your rocket to increase max level.' : '');
+
+            $('#upgrade-lumber-resistance')
+                .prop('disabled', resources.gold < lumberGoblinUpgrades.resistanceCost || resources.lumber < lumberGoblinUpgrades.resistanceCostLumber || lumberGoblinUpgrades.resistanceLevel >= maxLevel)
+                .attr('title', lumberGoblinUpgrades.resistanceLevel >= maxLevel ? 'Max level reached. Upgrade your rocket to increase max level.' : '');
+
+            // Gold Goblin Upgrades
+            $('#upgrade-gold-speed')
+                .prop('disabled', resources.lumber < goldGoblinUpgrades.speedCost || goldGoblinUpgrades.speedLevel >= maxLevel)
+                .attr('title', goldGoblinUpgrades.speedLevel >= maxLevel ? 'Max level reached. Upgrade your rocket to increase max level.' : '');
+
+            $('#upgrade-gold-carry')
+                .prop('disabled', resources.lumber < goldGoblinUpgrades.carryCost || goldGoblinUpgrades.carryLevel >= maxLevel)
+                .attr('title', goldGoblinUpgrades.carryLevel >= maxLevel ? 'Max level reached. Upgrade your rocket to increase max level.' : '');
+
+            $('#upgrade-gold-resistance')
+                .prop('disabled', resources.lumber < goldGoblinUpgrades.resistanceCost || resources.gold < goldGoblinUpgrades.resistanceCostGold || goldGoblinUpgrades.resistanceLevel >= maxLevel)
+                .attr('title', goldGoblinUpgrades.resistanceLevel >= maxLevel ? 'Max level reached. Upgrade your rocket to increase max level.' : '');
 
             // Rocket Upgrade Button
             $('#upgrade-rocket').prop('disabled', resources.lumber < rocketCost.lumber || resources.gold < rocketCost.gold);
+
+            updateLevelDisplays();
         }
 
         // Enemy Spawn Function
@@ -836,21 +918,37 @@
             function spawnLoop() {
                 if (!gameRunning) return;
 
-                spawnEnemy();
-
                 // Decrease interval as rocket level increases
                 let spawnInterval = Math.max(15000 - (rocketLevel - 1) * 1000, 5000); // Minimum interval of 5 seconds
 
-                enemyInterval = setTimeout(spawnLoop, spawnInterval);
+                nextEnemySpawnTime = Date.now() + spawnInterval;
+
+                enemyInterval = setTimeout(() => {
+                    if (!gameRunning) return;
+                    spawnEnemy();
+                    spawnLoop();
+                }, spawnInterval);
             }
 
-            spawnLoop();
+            if (timeRemainingToNextEnemy > 0) {
+                // Use remaining time
+                enemyInterval = setTimeout(() => {
+                    if (!gameRunning) return;
+                    spawnEnemy();
+                    spawnLoop();
+                }, timeRemainingToNextEnemy);
+                nextEnemySpawnTime = Date.now() + timeRemainingToNextEnemy;
+                timeRemainingToNextEnemy = 0;
+            } else {
+                spawnLoop();
+            }
         }
-
 
         // Enemy Variables
         let enemyInterval;
-        let enemies = []; // Array to keep track of active enemies
+        let enemies = [];
+        let nextEnemySpawnTime;
+        let timeRemainingToNextEnemy = 0;
 
         function spawnEnemy() {
             const enemy = $(`
@@ -877,16 +975,21 @@
                 }
             });
 
+            // Enemy object
+            let enemyObj = {
+                element: enemy,
+                animation: enemyAnimation,
+                attackTimeout: null
+            };
+
             // Store enemy and its animation
-            enemies.push({ element: enemy, animation: enemyAnimation });
+            enemies.push(enemyObj);
 
             // Enemy attacks a random goblin
-            setTimeout(() => {
+            enemyObj.attackTimeout = setTimeout(() => {
                 attackGoblin(enemy);
             }, 4000); // Enemy attacks at halfway point
         }
-
-
 
         function attackGoblin(enemy) {
             const allGoblins = lumberGoblins.concat(goldGoblins).filter(g => g.hp > 0);
@@ -923,23 +1026,9 @@
 
             // Check if goblin is dead
             // Check if goblin is dead
+            // Check if goblin is dead
             if (targetGoblin.hp <= 0) {
-                targetGoblin.isDead = true;
-                targetGoblin.element.hide(); // Hide the goblin from the map
-                targetGoblin.isMoving = false;
-
-                if (targetGoblin.resourceType === 'lumber') {
-                    $('#lumber-goblin-count').text(lumberGoblins.filter(g => !g.isDead).length);
-                } else {
-                    $('#gold-goblin-count').text(goldGoblins.filter(g => !g.isDead).length);
-                }
-
-                // Check if all goblins are dead
-                if (lumberGoblins.filter(g => !g.isDead).length === 0 && goldGoblins.filter(g => !g.isDead).length === 0) {
-                    endGame();
-                }
-
-                updateButtons();
+                handleGoblinDeath(targetGoblin);
             }
         }
 
@@ -1029,8 +1118,40 @@
             $('#rocket-cost-lumber').text(rocketCost.lumber);
             $('#rocket-cost-gold').text(rocketCost.gold);
 
+            // Update upgrade levels and costs
+            updateLevelDisplays();
+
+            // Update upgrade costs
+            $('#lumber-speed-cost').text(lumberGoblinUpgrades.speedCost);
+            $('#lumber-carry-cost').text(lumberGoblinUpgrades.carryCost);
+            $('#lumber-resistance-cost').text(lumberGoblinUpgrades.resistanceCost);
+            $('#lumber-resistance-cost-lumber').text(lumberGoblinUpgrades.resistanceCostLumber);
+
+            $('#gold-speed-cost').text(goldGoblinUpgrades.speedCost);
+            $('#gold-carry-cost').text(goldGoblinUpgrades.carryCost);
+            $('#gold-resistance-cost').text(goldGoblinUpgrades.resistanceCost);
+            $('#gold-resistance-cost-gold').text(goldGoblinUpgrades.resistanceCostGold);
+
+            $('#lumber-goblin-cost').text(lumberGoblinCost);
+            $('#gold-goblin-cost').text(goldGoblinCost);
+
             // Remove all goblin elements
             $('.goblin').remove();
+
+            // Clear enemy interval and remove enemies
+            clearTimeout(enemyInterval);
+            enemies.forEach(e => {
+                e.element.stop(true, true);
+                e.element.remove();
+                if (e.attackTimeout) {
+                    clearTimeout(e.attackTimeout);
+                }
+            });
+            enemies = [];
+
+            // Reset enemy spawn timing variables
+            nextEnemySpawnTime = null;
+            timeRemainingToNextEnemy = 0;
 
             updateButtons();
 
@@ -1060,6 +1181,40 @@
                 }
             });
         });
+
+        function updateLevelDisplays() {
+            let maxLevel = rocketLevel * 5;
+
+            // Lumber Goblin Upgrades
+            $('#lumber-speed-level').text(`${lumberGoblinUpgrades.speedLevel} / ${maxLevel}`);
+            $('#lumber-carry-level').text(`${lumberGoblinUpgrades.carryLevel} / ${maxLevel}`);
+            $('#lumber-resistance-level').text(`${lumberGoblinUpgrades.resistanceLevel} / ${maxLevel}`);
+
+            // Gold Goblin Upgrades
+            $('#gold-speed-level').text(`${goldGoblinUpgrades.speedLevel} / ${maxLevel}`);
+            $('#gold-carry-level').text(`${goldGoblinUpgrades.carryLevel} / ${maxLevel}`);
+            $('#gold-resistance-level').text(`${goldGoblinUpgrades.resistanceLevel} / ${maxLevel}`);
+        }
+
+        function handleGoblinDeath(goblinData) {
+            goblinData.isDead = true;
+            goblinData.isMoving = false;
+            goblinData.element.stop(true, true); // Stop all animations
+            goblinData.element.hide(); // Hide the goblin from the map
+
+            if (goblinData.resourceType === 'lumber') {
+                $('#lumber-goblin-count').text(lumberGoblins.filter(g => !g.isDead).length);
+            } else {
+                $('#gold-goblin-count').text(goldGoblins.filter(g => !g.isDead).length);
+            }
+
+            // Check if all goblins are dead
+            if (lumberGoblins.filter(g => !g.isDead).length === 0 && goldGoblins.filter(g => !g.isDead).length === 0) {
+                endGame();
+            }
+
+            updateButtons();
+        }
 
 
     </script>
