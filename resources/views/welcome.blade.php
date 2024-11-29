@@ -510,7 +510,7 @@
                     $('#' + goblinData.id + '-hp-bar').css('width', '100%');
 
                     startGoblin(goblinData);
-                    lumberGoblinResurrectCost = Math.floor(lumberGoblinResurrectCost * 1.5);
+                    lumberGoblinResurrectCost = Math.floor(lumberGoblinResurrectCost * 1.2);
                     $('#lumber-goblin-cost').text(lumberGoblinResurrectCost);
                     updateButtons();
                 }
@@ -548,7 +548,7 @@
                     $('#' + goblinData.id + '-hp-bar').css('width', '100%');
 
                     startGoblin(goblinData);
-                    goldGoblinResurrectCost = Math.floor(goldGoblinResurrectCost * 1.5);
+                    goldGoblinResurrectCost = Math.floor(goldGoblinResurrectCost * 1.2);
                     $('#gold-goblin-cost').text(goldGoblinResurrectCost);
                     updateButtons();
                 }
