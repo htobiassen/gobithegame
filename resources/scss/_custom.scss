@@ -150,10 +150,11 @@ body {
     user-select: none;
 }
 .map-section {
+    //363x498
     height: 500px;
     position: relative;
     overflow: hidden;
-    background-image: url("/public/images/game_assets/game_background.webp");
+    background-image: url("/public/images/game_assets/game_background_1280.jpg");
 }
 @media (min-width: 768px) {
     .map-section {
@@ -175,6 +176,22 @@ body {
     .forest {
         top: 10%;
         left: 10%;
+    }
+}
+
+@media (min-width: 992px) {
+    //908
+    .map-section {
+        height:598px;
+        background-image: url("/public/images/game_assets/game_background_1280.jpg");
+    }
+}
+
+@media (min-width: 1400px) {
+    //1268
+    .map-section {
+        height:598px;
+        background-image: url("/public/images/game_assets/game_background_1280.jpg");
     }
 }
 

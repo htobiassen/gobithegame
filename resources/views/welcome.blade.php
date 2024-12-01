@@ -20,7 +20,9 @@
                         </div>
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
-                        <div id="mine" class="map-item mine"><img class="img-mine" src="../../images/game_assets/goldmine.webp"></div>
+                        <div id="mine" class="map-item mine">
+{{--                            <img class="img-mine" src="../../images/game_assets/goldmine.webp">--}}
+                        </div>
                         <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.webp"></div>
                         <!-- Goblins will be dynamically added here -->
                     </div>
@@ -282,8 +284,12 @@
             const resourceElement = resourceType === 'lumber' ? $('#forest') : $('#mine');
             const resourcePos = resourceElement.position();
             if (resourceType === 'gold') {
-                resourcePos.top += 100; // Adjust the top offset
-                resourcePos.left += 50; // Adjust the left offset
+                resourcePos.top += 140; // Adjust the top offset
+                resourcePos.left -= 160; // Adjust the left offset
+            }
+            if (resourceType === 'lumber') {
+                resourcePos.top += 140; // Adjust the top offset
+                resourcePos.left += 60; // Adjust the left offset
             }
             const rocketPos = $('#rocket').position();
 
@@ -301,7 +307,7 @@
 
                 let upgrades = resourceType === 'lumber' ? lumberGoblinUpgrades : goldGoblinUpgrades;
                 // Adjust speed formula to prevent goblins from becoming too fast
-                let baseSpeed = Math.max(3000 / (1 + 0.05 * upgrades.speedLevel), 1000);
+                let baseSpeed = Math.max(2000 / (1 + 0.05 * upgrades.speedLevel), 1000);
                 let carryAmount = upgrades.carryLevel;
 
                 let startPos = goblin.position();
