@@ -206,7 +206,7 @@
                 resourceType: 'lumber',
                 isMoving: false,
                 direction: 'toResource',
-                hp: 1,
+                hp: 100,
                 maxHp: 100,
                 isDead: false
             };
@@ -245,7 +245,7 @@
                 resourceType: 'gold',
                 isMoving: false,
                 direction: 'toResource',
-                hp: 1,
+                hp: 100,
                 maxHp: 100
             };
             const rocketCenter = getElementCenter($('#rocket'));
