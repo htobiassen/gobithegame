@@ -45,9 +45,6 @@ body {
 .table-sm > :not(caption) > * > * {
     padding: 0.3rem 0.75rem;
 }
-.img-mine {
-    height: 120px !important;
-}
 .img-rocket {
     height: 150px !important;
 }
@@ -55,12 +52,16 @@ body {
     height: 45px !important;
 }
 .mine {
-    top: 5%;
-    right: 1%;
+    position: absolute;
+    top: 35%; /* Adjust as needed */
+    right: 25%; /* Adjust as needed */
+    transform: translate(50%, 0);
 }
 .forest {
-    top: 10%;
-    left: 10%;
+    position: absolute;
+    top: 35%; /* Adjust as needed */
+    left: 25%; /* Adjust as needed */
+    transform: translate(-50%, 0);
 }
 .goblin {
     position: absolute;
@@ -69,6 +70,12 @@ body {
     font-size: 20px;
     text-align: center;
     user-select: none;
+}
+.rocket {
+    position: absolute;
+    bottom: 10%; /* Adjust as needed */
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 .map-section {
     //363x498
@@ -82,22 +89,11 @@ body {
     .map-section {
         height: 600px;
     }
-    .img-mine {
-        height: 180px !important;
-    }
-    .mine {
-        top: 3%;
-        right: 7%;
-    }
     .img-rocket {
         height: 230px !important;
     }
     .img-goblin {
         height: 60px !important;
-    }
-    .forest {
-        top: 10%;
-        left: 10%;
     }
 }
 
@@ -125,12 +121,6 @@ body {
     padding: 10px;
     border-radius: 50%;
     user-select: none;
-}
-
-.rocket {
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .collecting {
@@ -271,6 +261,28 @@ table td {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.score-display {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 1000;
+}
+.message-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #32423b; /* Only visible when it has content */
+    display: none; /* Ensures it doesn't show up unless explicitly displayed */
+}
+
+/* When content is added and shown, padding can appear dynamically */
+.message-container.alert {
+    padding: 10px 15px;
 }
 
 

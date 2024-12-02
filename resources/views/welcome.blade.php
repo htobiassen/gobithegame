@@ -10,8 +10,6 @@
             <div class="row">
                 <!-- Map Section -->
                 <div class="col-md-12 position-relative">
-
-
                     <div class="map-section rounded border border-1 border-primary">
                         <!-- Score Display -->
                         <div class="score-display bg-primary p-1 rounded">
@@ -28,7 +26,6 @@
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
                         <div id="mine" class="map-item mine">
-{{--                            <img class="img-mine" src="../../images/game_assets/goldmine.webp">--}}
                         </div>
                         <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.webp"></div>
                         <!-- Goblins will be dynamically added here -->
@@ -36,7 +33,6 @@
                         <!-- Message Container -->
                         <div id="message-container" class="message-container"></div>
                     </div>
-
 
                     <!-- Control Buttons -->
                     <div class="control-btns-display">
@@ -151,32 +147,6 @@
         </div>
     </div>
 @endsection
-<style>
-    .score-display {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        font-size: 14px;
-        font-weight: bold;
-        z-index: 1000;
-    }
-    .message-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-        background-color: #32423b; /* Only visible when it has content */
-        display: none; /* Ensures it doesn't show up unless explicitly displayed */
-    }
-
-    /* When content is added and shown, padding can appear dynamically */
-    .message-container.alert {
-        padding: 10px 15px;
-    }
-
-</style>
-
 @push('scripts')
     <script>
         // Game State
@@ -239,6 +209,16 @@
             gameStartTime = Date.now(); // Store game start time
         });
 
+        function getElementCenter(element) {
+            const pos = element.position();
+            const width = element.width();
+            const height = element.height();
+            return {
+                left: pos.left + width / 2,
+                top: pos.top + height / 2
+            };
+        }
+
         // Add Goblin Functions
         function addLumberGoblin() {
             if (lumberGoblins.length >= maxGoblins) {
@@ -247,22 +227,26 @@
             }
             const goblinId = 'lumber-goblin-' + (lumberGoblins.length + 1);
             const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.webp"></div>');
+
+            const rocketCenter = getElementCenter($('#rocket'));
+
             const goblinData = {
                 id: goblinId,
                 element: goblin,
                 resourceType: 'lumber',
-                position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 1,
+                hp: 100,
                 maxHp: 100,
                 isDead: false
             };
+
             goblin.css({
-                top: goblinData.position.top,
-                left: goblinData.position.left,
-                transform: 'translate(-50%, -50%)'
+                position: 'absolute',
+                top: rocketCenter.top - goblin.height() / 2,
+                left: rocketCenter.left - goblin.width() / 2
             });
+
             // Create health bar
             const hpBarContainer = $('<div class="goblin-hp-bar-container"></div>');
             const hpBar = $('<div class="goblin-hp-bar" id="' + goblinId + '-hp-bar"></div>');
@@ -289,16 +273,16 @@
                 id: goblinId,
                 element: goblin,
                 resourceType: 'gold',
-                position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 1,
+                hp: 100,
                 maxHp: 100
             };
+            const rocketCenter = getElementCenter($('#rocket'));
             goblin.css({
-                top: goblinData.position.top,
-                left: goblinData.position.left,
-                transform: 'translate(-50%, -50%)'
+                position: 'absolute',
+                top: rocketCenter.top - goblin.height() / 2,
+                left: rocketCenter.left - goblin.width() / 2
             });
             // Create health bar
             const hpBarContainer = $('<div class="goblin-hp-bar-container"></div>');
@@ -317,30 +301,17 @@
 
         // Start Goblin Movement
         function startGoblin(goblinData) {
-            if (goblinData.isMoving || goblinData.isDead) return; // Prevent multiple loops or if goblin is dead
+            if (goblinData.isMoving || goblinData.isDead) return;
             goblinData.isMoving = true;
 
             const goblin = goblinData.element;
             const resourceType = goblinData.resourceType;
 
-            // Positions in pixels
             const resourceElement = resourceType === 'lumber' ? $('#forest') : $('#mine');
-            const resourcePos = resourceElement.position();
-            if (resourceType === 'gold') {
-                resourcePos.top += 140; // Adjust the top offset
-                resourcePos.left -= 160; // Adjust the left offset
-            }
-            if (resourceType === 'lumber') {
-                resourcePos.top += 140; // Adjust the top offset
-                resourcePos.left += 60; // Adjust the left offset
-            }
-            const rocketPos = $('#rocket').position();
+            const rocketElement = $('#rocket');
 
-            // Add an offset to adjust where goblins land at the rocket
-            const adjustedRocketPos = {
-                left: rocketPos.left + 30, // Move the goblin slightly to the right
-                top: rocketPos.top // Keep the vertical position the same
-            };
+            const resourceCenter = getElementCenter(resourceElement);
+            const rocketCenter = getElementCenter(rocketElement);
 
             function goblinLoop() {
                 if (!gameRunning || goblinData.hp <= 0) {
@@ -349,47 +320,24 @@
                 }
 
                 let upgrades = resourceType === 'lumber' ? lumberGoblinUpgrades : goldGoblinUpgrades;
-                // Adjust speed formula to prevent goblins from becoming too fast
-                let baseSpeed = Math.max(2000 / (1 + 0.05 * upgrades.speedLevel), 1000);
+                let baseSpeed = 2000 / (1 + 0.05 * upgrades.speedLevel);
                 let carryAmount = upgrades.carryLevel;
 
                 let startPos = goblin.position();
-                let targetPos;
+                let targetPos = goblinData.direction === 'toResource' ? resourceCenter : rocketCenter;
 
-                if (goblinData.direction === 'toResource') {
-                    targetPos = resourcePos;
-                } else if (goblinData.direction === 'toRocket') {
-                    targetPos = adjustedRocketPos; // Use adjusted position for the rocket
-                }
-
-                // Calculate distance between current position and target
-                let dx = targetPos.left - startPos.left;
-                let dy = targetPos.top - startPos.top;
+                // Calculate distance and adjust speed
+                let dx = targetPos.left - startPos.left - goblin.width() / 2;
+                let dy = targetPos.top - startPos.top - goblin.height() / 2;
                 let distance = Math.sqrt(dx * dx + dy * dy);
-
-                // Calculate total distance between resource and rocket
-                let totalDx = resourcePos.left - adjustedRocketPos.left;
-                let totalDy = resourcePos.top - adjustedRocketPos.top;
-                let totalDistance = Math.sqrt(totalDx * totalDx + totalDy * totalDy);
-
-                // Adjust speed based on remaining distance
-                let adjustedSpeed = baseSpeed * (distance / totalDistance);
-
-                // Calculate an offset based on goblin ID to prevent overlapping
-                let offsetX = parseInt(goblinData.id.split('-').pop()) * 10; // Adjust as needed
-                let offsetY = parseInt(goblinData.id.split('-').pop()) * 5;
-
-                // Apply offset to the target positions
-                let adjustedTargetPos = {
-                    left: targetPos.left + offsetX,
-                    top: targetPos.top + offsetY
-                };
+                const standardDistance = 500; // Adjust as needed
+                let adjustedSpeed = baseSpeed * (distance / standardDistance);
 
                 // Start moving
                 goblin.animate(
                     {
-                        left: adjustedTargetPos.left,
-                        top: adjustedTargetPos.top
+                        left: targetPos.left - goblin.width() / 2,
+                        top: targetPos.top - goblin.height() / 2
                     },
                     adjustedSpeed,
                     'linear',
@@ -398,29 +346,27 @@
                             goblin.addClass('collecting');
 
                             if (resourceType === 'gold') {
-                                // Fade out when reaching the gold mine
+                                // Simulate entering the mine
                                 goblin.fadeOut(500, () => {
-                                    if (goblinData.isDead) return; // Check if goblin is dead
-                                    // Wait inside the mine
+                                    if (goblinData.isDead) return;
                                     setTimeout(() => {
-                                        if (goblinData.isDead) return; // Check if goblin is dead
-                                        // Fade in when leaving the gold mine
+                                        if (goblinData.isDead) return;
                                         goblin.fadeIn(500, () => {
-                                            if (goblinData.isDead) return; // Check if goblin is dead
+                                            if (goblinData.isDead) return;
                                             goblin.removeClass('collecting');
                                             goblinData.direction = 'toRocket';
                                             goblinLoop();
                                         });
-                                    }, 1500); // Time spent inside the mine
+                                    }, 1500);
                                 });
                             } else {
                                 // For lumber goblins, just wait
                                 setTimeout(() => {
-                                    if (goblinData.isDead) return; // Check if goblin is dead
+                                    if (goblinData.isDead) return;
                                     goblin.removeClass('collecting');
                                     goblinData.direction = 'toRocket';
                                     goblinLoop();
-                                }, 1500); // Wait time at the forest
+                                }, 1500);
                             }
                         } else if (goblinData.direction === 'toRocket') {
                             // Deliver resources
@@ -429,7 +375,7 @@
                             displayCounter(goblin, '+' + carryAmount);
                             updateButtons();
                             goblinData.direction = 'toResource';
-                            goblinLoop(); // Continue loop after delivering
+                            goblinLoop();
                         }
                     }
                 );
@@ -437,7 +383,6 @@
 
             goblinLoop();
         }
-
 
         // Display Counter Animation
         function displayCounter(goblin, text) {
@@ -491,9 +436,6 @@
             }
         });
 
-
-
-        // Resume Game
         // Resume Game
         $('#resume-game').click(() => {
             gameRunning = true;
