@@ -37,7 +37,7 @@
                             <button id="pause-game" class="btn btn-sm btn-secondary p-1" style="display: none;">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
                             </button>
-                            <button id="resume-game" class="btn btn-sm btn-primary p-1" style="display: none;">
+                            <button id="resume-game" class="btn btn-sm btn-secondary p-1" style="display: none;">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
                             </button>
                         </div>
@@ -56,16 +56,16 @@
                             </div>
                             <div class="upgrade-controls">
                                 <button id="buy-lumber-goblin" class="btn btn-sm btn-fourthiary">
-                                    Buy - <span id="lumber-goblin-cost">20</span> 💰
+                                    Buy <span id="lumber-goblin-cost">20</span> 💰
                                 </button>
                                 <button id="upgrade-lumber-speed" class="btn btn-sm btn-fourthiary">
-                                    Speed (Lv <span id="lumber-speed-level">1</span>) - <span id="lumber-speed-cost">5</span> 💰
+                                    Speed (<span id="lumber-speed-level">1</span>) <span id="lumber-speed-cost">5</span>💰
                                 </button>
                                 <button id="upgrade-lumber-carry" class="btn btn-sm btn-fourthiary">
-                                    Carry (Lv <span id="lumber-carry-level">1</span>) - <span id="lumber-carry-cost">5</span> 💰
+                                    Carry (<span id="lumber-carry-level">1</span>) <span id="lumber-carry-cost">5</span>💰
                                 </button>
                                 <button id="upgrade-lumber-resistance" class="btn btn-sm btn-fourthiary">
-                                    Resist (Lv <span id="lumber-resistance-level">1</span>) - <span id="lumber-resistance-cost">8</span> 💰, <span id="lumber-resistance-cost-lumber">8</span> 🌲
+                                    Resist (<span id="lumber-resistance-level">1</span>) <span id="lumber-resistance-cost">8</span>💰 <span id="lumber-resistance-cost-lumber">8</span>🌲
                                 </button>
                             </div>
                         </div>
@@ -77,16 +77,16 @@
                             </div>
                             <div class="upgrade-controls">
                                 <button id="buy-gold-goblin" class="btn btn-sm btn-fourthiary">
-                                    Buy - <span id="gold-goblin-cost">20</span> 🌲
+                                    Buy <span id="gold-goblin-cost">20</span>🌲
                                 </button>
                                 <button id="upgrade-gold-speed" class="btn btn-sm btn-fourthiary">
-                                    Speed (Lv <span id="gold-speed-level">1</span>) - <span id="gold-speed-cost">5</span> 🌲
+                                    Speed (<span id="gold-speed-level">1</span>) <span id="gold-speed-cost">5</span>🌲
                                 </button>
                                 <button id="upgrade-gold-carry" class="btn btn-sm btn-fourthiary">
-                                    Carry (Lv <span id="gold-carry-level">1</span>) - <span id="gold-carry-cost">5</span> 🌲
+                                    Carry (<span id="gold-carry-level">1</span>) <span id="gold-carry-cost">5</span>🌲
                                 </button>
                                 <button id="upgrade-gold-resistance" class="btn btn-sm btn-fourthiary">
-                                    Resist (Lv <span id="gold-resistance-level">1</span>) - <span id="gold-resistance-cost">8</span> 🌲, <span id="gold-resistance-cost-gold">8</span> 💰
+                                    Resist (<span id="gold-resistance-level">1</span>) <span id="gold-resistance-cost">8</span>🌲 <span id="gold-resistance-cost-gold">8</span>💰
                                 </button>
                             </div>
                         </div>
@@ -94,11 +94,11 @@
                         <!-- Rocket Upgrade -->
                         <div class="upgrade-item">
                             <div class="upgrade-header">
-                                🚀 Rocket (Lv <span id="rocket-level">1</span>)
+                                🚀 Rocket Lv <span id="rocket-level">1</span>
                             </div>
                             <div class="upgrade-controls">
                                 <button id="upgrade-rocket" class="btn btn-sm btn-fourthiary">
-                                    Upgrade - <span id="rocket-cost-lumber">70</span> 🌲, <span id="rocket-cost-gold">70</span> 💰
+                                    Upgrade <span id="rocket-cost-lumber">70</span>🌲 <span id="rocket-cost-gold">70</span>💰
                                 </button>
                             </div>
                         </div>
@@ -696,17 +696,16 @@
 
             if (lumberGoblins.length < maxGoblins) {
                 // Can buy new goblin
-                $('#buy-lumber-goblin').html(`Buy - <span id="lumber-goblin-cost">${lumberGoblinCost}</span> 💰`);
+                $('#buy-lumber-goblin').html(`Buy <span id="lumber-goblin-cost">${lumberGoblinCost}</span>💰`);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost);
             } else if (deadLumberGoblins.length > 0) {
                 // Can resurrect dead goblin
-                $('#buy-lumber-goblin').html(`Resurrect - <span id="lumber-goblin-cost">${lumberGoblinResurrectCost}</span> 💰`);
+                $('#buy-lumber-goblin').html(`Resurrect <span id="lumber-goblin-cost">${lumberGoblinResurrectCost}</span>💰`);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinResurrectCost);
             } else {
                 // Cannot buy or resurrect
                 $('#buy-lumber-goblin').prop('disabled', true);
             }
-
 
             // Update the goblin count display
             $('#lumber-goblin-count').text(aliveLumberGoblins.length);
@@ -718,11 +717,11 @@
 
             if (goldGoblins.length < maxGoblins) {
                 // Can buy new goblin
-                $('#buy-gold-goblin').html(`Buy - <span id="gold-goblin-cost">${goldGoblinCost}</span> 🌲`);
+                $('#buy-gold-goblin').html(`Buy <span id="gold-goblin-cost">${goldGoblinCost}</span>🌲`);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost);
             } else if (deadGoldGoblins.length > 0) {
                 // Can resurrect dead goblin
-                $('#buy-gold-goblin').html(`Resurrect - <span id="gold-goblin-cost">${goldGoblinResurrectCost}</span> 🌲`);
+                $('#buy-gold-goblin').html(`Resurrect <span id="gold-goblin-cost">${goldGoblinResurrectCost}</span>🌲`);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinResurrectCost);
             } else {
                 // Cannot buy or resurrect
@@ -1061,14 +1060,14 @@
             let maxLevel = rocketLevel * 5;
 
             // Lumber Goblin Upgrades
-            $('#lumber-speed-level').text(`${lumberGoblinUpgrades.speedLevel} / ${maxLevel}`);
-            $('#lumber-carry-level').text(`${lumberGoblinUpgrades.carryLevel} / ${maxLevel}`);
-            $('#lumber-resistance-level').text(`${lumberGoblinUpgrades.resistanceLevel} / ${maxLevel}`);
+            $('#lumber-speed-level').text(`${lumberGoblinUpgrades.speedLevel}/${maxLevel}`);
+            $('#lumber-carry-level').text(`${lumberGoblinUpgrades.carryLevel}/${maxLevel}`);
+            $('#lumber-resistance-level').text(`${lumberGoblinUpgrades.resistanceLevel}/${maxLevel}`);
 
             // Gold Goblin Upgrades
-            $('#gold-speed-level').text(`${goldGoblinUpgrades.speedLevel} / ${maxLevel}`);
-            $('#gold-carry-level').text(`${goldGoblinUpgrades.carryLevel} / ${maxLevel}`);
-            $('#gold-resistance-level').text(`${goldGoblinUpgrades.resistanceLevel} / ${maxLevel}`);
+            $('#gold-speed-level').text(`${goldGoblinUpgrades.speedLevel}/${maxLevel}`);
+            $('#gold-carry-level').text(`${goldGoblinUpgrades.carryLevel}/${maxLevel}`);
+            $('#gold-resistance-level').text(`${goldGoblinUpgrades.resistanceLevel}/${maxLevel}`);
         }
 
         function handleGoblinDeath(goblinData) {

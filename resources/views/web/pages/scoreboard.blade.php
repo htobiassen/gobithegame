@@ -17,7 +17,7 @@
                             <tr>
                                 <th class="text-white">Rank</th>
                                 <th class="text-white">Name</th>
-                                <th class="text-white">Rocket Level</th>
+                                <th class="text-white">Score</th>
                             </tr>
                             </thead>
                             <thead>
@@ -27,7 +27,7 @@
                                 <tr>
                                     <td class="text-white">{{ $index + 1 }}</td>
                                     <td class="text-white">{{ $score->name }}</td>
-                                    <td class="text-white">{{ $score->rocket_level }}</td>
+                                    <td class="text-white">{{ $score->score }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

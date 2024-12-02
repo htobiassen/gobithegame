@@ -10,7 +10,7 @@ class ScoreController extends Controller
     // Display the scoreboard
     public function index()
     {
-        $scores = Score::orderBy('rocket_level', 'desc')->take(100)->get();
+        $scores = Score::orderBy('score', 'desc')->take(100)->get();
         return view('web.pages.scoreboard', compact('scores'));
     }
 

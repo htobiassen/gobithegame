@@ -3,11 +3,11 @@
         <!-- Left Navigation -->
         <ul class="navbar-nav me-auto">
             <div class="btn-group">
-                <a href="/" class="btn btn-outline-primary fs-6 fw-bold text-white {{ request()->is('/') ? 'active' : '' }}">
+                <a href="/" class="btn btn-outline-tertiary fs-6 fw-bold text-white {{ request()->is('/') ? 'active' : '' }}">
                     Play <img src="{{ asset('images/favicon/favicon-32x32.png') }}" height="22px">
                 </a>
 
-                <a href="{{ route('scoreboard') }}" class="btn btn-outline-primary fs-6 fw-bold text-white {{ request()->is('scoreboard') ? 'active' : '' }}">
+                <a href="{{ route('scoreboard') }}" class="btn btn-outline-tertiary fs-6 fw-bold text-white {{ request()->is('scoreboard') ? 'active' : '' }}">
                     Scoreboard
                 </a>
             </div>
