@@ -9,12 +9,13 @@
                     <a href="https://twitter.com/gobixyz" title="X" class="me-3 text-decoration-none text-tertiary" target="_blank">
                         <i class="fa-brands fa-x-twitter fs-5 text-tertiary"></i>
                     </a>
-                    <a href="https://t.me/GOBIversecommunity" title="X" class="me-3 text-decoration-none text-tertiary" target="_blank">
+                    <a href="https://t.me/GOBIversecommunity" title="Telegram" class="me-3 text-decoration-none text-tertiary" target="_blank">
                         <i class="fa-brands fa-telegram fs-5 text-tertiary"></i>
                     </a>
-                    <div class="text-tertiary mt-3">
-                        <span class="fw-bold">CA:</span> CwdjgD54hgTQChspxHhirWLQWqy3EsxtndrcpLBqpump
-                    </div>
+
+                    <a href="https://dexscreener.com/solana/adarbxupgfh8sbwamigcptcux8b83tnu5erhhmmybfn9" title="X" class="d-block mt-3 text-decoration-none text-tertiary" target="_blank">
+                        Dexscreener
+                    </a>
                 </a>
 			</div>
 
