@@ -356,7 +356,7 @@
 
         // Display Counter Animation
         function displayCounter(goblin, text) {
-            const counter = $('<div class="delivery-counter"></div>').text(text);
+            const counter = $('<div class="delivery-counter text-white fs-5"></div>').text(text);
             const offset = goblin.offset();
             counter.css({ top: offset.top - 20, left: offset.left + 20 });
             $('body').append(counter);
