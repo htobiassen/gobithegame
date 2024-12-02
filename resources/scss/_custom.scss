@@ -286,3 +286,72 @@ table td {
 }
 
 
+/* Upgrades Menu */
+.upgrades-menu {
+
+    display: flex;
+    gap: 5px;
+    background-color: rgba(50, 66, 59, 0.9);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #fff;
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.upgrade-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.upgrade-header {
+    font-weight: bold;
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.upgrade-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.upgrade-controls button {
+    padding: 4px 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    border: none;
+    border-radius: 3px;
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.upgrade-controls button:hover {
+    background-color: #45a049;
+}
+
+.upgrade-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .upgrades-menu {
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 11px;
+    }
+
+    .upgrade-item {
+        flex-direction: column;
+    }
+
+    .upgrade-controls {
+        justify-content: flex-start;
+    }
+}
+

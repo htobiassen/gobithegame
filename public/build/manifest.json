@@ -3,12 +3,16 @@
     "file": "assets/main-Dx7K7bcM.webp",
     "src": "public/images/backgrounds/main.webp"
   },
-  "public/images/game_assets/game_background.webp": {
-    "file": "assets/game_background--cWRMHYh.webp",
-    "src": "public/images/game_assets/game_background.webp"
+  "public/images/game_assets/game_background_1280.jpg": {
+    "file": "assets/game_background_1280-Cl_xlVDG.jpg",
+    "src": "public/images/game_assets/game_background_1280.jpg"
+  },
+  "public/images/game_assets/game_background_363.jpg": {
+    "file": "assets/game_background_363-CQu8ATNv.jpg",
+    "src": "public/images/game_assets/game_background_363.jpg"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Dt0ZIi4D.css",
+    "file": "assets/app-DR5fYs7G.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -19,7 +23,7 @@
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-B6FVksF9.css",
+    "file": "assets/app-kk902Koi.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }

@@ -3,7 +3,7 @@
 @endsection
 @section('content')
     @include('web.partials.navbar')
-    <div class="container p-0 p-md-2 pb-3">
+    <div class="container p-0 p-md-2 pb-3 mb-5">
         <!-- Start Screen Overlay -->
         <div class="card card-body mt-1 mt-md-3 bg-tertiary p-1 p-md-3">
 
@@ -25,125 +25,95 @@
                         </div>
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
-                        <div id="mine" class="map-item mine">
-                        </div>
+                        <div id="mine" class="map-item mine"></div>
                         <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.webp"></div>
                         <!-- Goblins will be dynamically added here -->
 
                         <!-- Message Container -->
                         <div id="message-container" class="message-container"></div>
+
+                        <!-- Control Buttons -->
+                        <div class="control-btns-display">
+                            <button id="pause-game" class="btn btn-sm btn-secondary p-1" style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
+                            </button>
+                            <button id="resume-game" class="btn btn-sm btn-primary p-1" style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- Resources Display -->
+                        <div class="resources-display bg-primary p-1 rounded">
+                            💰 <span id="gold-count">0</span> &nbsp;&nbsp; 🌲 <span id="lumber-count">0</span>
+                        </div>
                     </div>
 
-                    <!-- Control Buttons -->
-                    <div class="control-btns-display">
-                        <button id="pause-game" class="btn btn-sm btn-secondary p-1" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
-                        </button>
-                        <button id="resume-game" class="btn btn-sm btn-primary p-1" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="19px" fill="#FFFFFF"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
-                        </button>
-                    </div>
-                    <!-- Resources Display -->
-                    <div class="resources-display bg-primary p-1 rounded">
-                        💰 <span id="gold-count">0</span> &nbsp;&nbsp; 🌲 <span id="lumber-count">0</span>
-                    </div>
-                </div>
-
-                <!-- Upgrade Menu -->
-                <div class="col-md-4 mt-3">
-                    <!-- Upgrades Table -->
-                    <table class="table table-sm small table-secondary table-striped rounded border-0 mb-0">
-                        <tbody>
+                    <div class="upgrades-menu">
                         <!-- Lumber Goblin Upgrades -->
-                        <tr class="table-dark small">
-                            <td colspan="4" class="text-center rounded-top">🌲 Lumber Gobi's</td>
-                        </tr>
-                        <tr>
-                            <td>Number</td>
-                            <td><span id="lumber-goblin-count">1</span>/<span id="lumber-max-goblins">3</span></td>
-                            <td><span id="lumber-goblin-cost">20</span> 💰</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="buy-lumber-goblin">Buy</button></td>
-                        </tr>
-                        <tr>
-                            <td>Speed</td>
-                            <td><span id="lumber-speed-level">1 / 5</span></td>
-                            <td><span id="lumber-speed-cost">5</span> 💰</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-speed">Upgrade</button></td>
-                        </tr>
-                        <tr>
-                            <td>Carry</td>
-                            <td><span id="lumber-carry-level">1 / 5</span></td>
-                            <td><span id="lumber-carry-cost">5</span> 💰</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-carry">Upgrade</button></td>
-                        </tr>
-                        <tr>
-                            <td>Resistance</td>
-                            <td><span id="lumber-resistance-level">1 / 5</span></td>
-                            <td><span id="lumber-resistance-cost">8</span> 💰 <span id="lumber-resistance-cost-lumber">8</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-lumber-resistance">Upgrade</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <div class="upgrade-item">
+                            <div class="upgrade-header">
+                                🌲 Lumber Gobis (<span id="lumber-goblin-count">1</span>/<span id="lumber-max-goblins">3</span>)
+                            </div>
+                            <div class="upgrade-controls">
+                                <button id="buy-lumber-goblin" class="btn btn-sm btn-fourthiary">
+                                    Buy - <span id="lumber-goblin-cost">20</span> 💰
+                                </button>
+                                <button id="upgrade-lumber-speed" class="btn btn-sm btn-fourthiary">
+                                    Speed (Lv <span id="lumber-speed-level">1</span>) - <span id="lumber-speed-cost">5</span> 💰
+                                </button>
+                                <button id="upgrade-lumber-carry" class="btn btn-sm btn-fourthiary">
+                                    Carry (Lv <span id="lumber-carry-level">1</span>) - <span id="lumber-carry-cost">5</span> 💰
+                                </button>
+                                <button id="upgrade-lumber-resistance" class="btn btn-sm btn-fourthiary">
+                                    Resist (Lv <span id="lumber-resistance-level">1</span>) - <span id="lumber-resistance-cost">8</span> 💰, <span id="lumber-resistance-cost-lumber">8</span> 🌲
+                                </button>
+                            </div>
+                        </div>
 
-                </div>
-                <div class="col-md-4 mt-3">
-                    <!-- Upgrades Table -->
-                    <table class="table table-sm small table-secondary table-striped rounded border-0 mb-0">
-                        <tbody>
                         <!-- Gold Goblin Upgrades -->
-                        <tr class="table-dark small">
-                            <td colspan="4" class="text-center rounded-top">💰 Gold Gobi's</td>
-                        </tr>
-                        <tr>
-                            <td>Number</td>
-                            <td><span id="gold-goblin-count">1</span>/<span id="gold-max-goblins">3</span></td>
-                            <td><span id="gold-goblin-cost">20</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="buy-gold-goblin">Buy</button></td>
-                        </tr>
-                        <tr>
-                            <td>Speed</td>
-                            <td><span id="gold-speed-level">1 / 5</span></td>
-                            <td><span id="gold-speed-cost">5</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-speed">Upgrade</button></td>
-                        </tr>
-                        <tr>
-                            <td>Carry</td>
-                            <td><span id="gold-carry-level">1 / 5</span></td>
-                            <td><span id="gold-carry-cost">5</span> 🌲</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-carry">Upgrade</button></td>
-                        </tr>
-                        <tr>
-                            <td>Resistance</td>
-                            <td><span id="gold-resistance-level">1 / 5</span></td>
-                            <td><span id="gold-resistance-cost">8</span> 🌲 <span id="gold-resistance-cost-gold">8</span> 💰</td>
-                            <td><button class="btn btn-sm btn-fourthiary" id="upgrade-gold-resistance">Upgrade</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <div class="upgrade-item">
+                            <div class="upgrade-header">
+                                💰 Gold Gobis (<span id="gold-goblin-count">1</span>/<span id="gold-max-goblins">3</span>)
+                            </div>
+                            <div class="upgrade-controls">
+                                <button id="buy-gold-goblin" class="btn btn-sm btn-fourthiary">
+                                    Buy - <span id="gold-goblin-cost">20</span> 🌲
+                                </button>
+                                <button id="upgrade-gold-speed" class="btn btn-sm btn-fourthiary">
+                                    Speed (Lv <span id="gold-speed-level">1</span>) - <span id="gold-speed-cost">5</span> 🌲
+                                </button>
+                                <button id="upgrade-gold-carry" class="btn btn-sm btn-fourthiary">
+                                    Carry (Lv <span id="gold-carry-level">1</span>) - <span id="gold-carry-cost">5</span> 🌲
+                                </button>
+                                <button id="upgrade-gold-resistance" class="btn btn-sm btn-fourthiary">
+                                    Resist (Lv <span id="gold-resistance-level">1</span>) - <span id="gold-resistance-cost">8</span> 🌲, <span id="gold-resistance-cost-gold">8</span> 💰
+                                </button>
+                            </div>
+                        </div>
 
-                </div>
-                <div class="col-md-4 mt-3">
-                    <!-- Upgrades Table -->
-                    <table class="table table-sm small table-secondary table-striped rounded border-0 mb-0">
-                        <tbody>
                         <!-- Rocket Upgrade -->
-                        <tr class="table-dark small">
-                            <td colspan="4" class="text-center rounded-top">Rocket</td>
-                        </tr>
-                        <tr class="rounded-bottom">
-                            <td class="rounded-start-bottom">Level</td>
-                            <td><span id="rocket-level">1</span></td>
-                            <td><span id="rocket-cost-lumber">70</span> 🌲 <span id="rocket-cost-gold">70</span> 💰</td>
-                            <td class="rounded-end-bottom"><button class="btn btn-sm btn-fourthiary" id="upgrade-rocket">Upgrade</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="mt-3 small text-white">
-                        Get as high score as possible!
-                        <br />Everytime rocket is upgraded Rafa is trying even harder to rug you.
+                        <div class="upgrade-item">
+                            <div class="upgrade-header">
+                                🚀 Rocket (Lv <span id="rocket-level">1</span>)
+                            </div>
+                            <div class="upgrade-controls">
+                                <button id="upgrade-rocket" class="btn btn-sm btn-fourthiary">
+                                    Upgrade - <span id="rocket-cost-lumber">70</span> 🌲, <span id="rocket-cost-gold">70</span> 💰
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card mt-4 p-3 bg-tertiary text-white">
+            <h3 class="text-center">How to Play</h3>
+            <ul class="list-unstyled">
+                <li><strong>Goal:</strong> Upgrade your rocket as much as possible to achieve a high score!</li>
+                <li><strong>Gather Resources:</strong> Goblins gather <span class="text-fourthiary">gold 💰</span> and <span class="text-fourthiary">lumber 🌲</span>.</li>
+                <li><strong>Upgrade:</strong> Invest resources to improve goblins’ speed, carry capacity, and resistance.</li>
+                <li><strong>Score:</strong> Earn points for upgrades. Submit your score to compete!</li>
+            </ul>
         </div>
     </div>
 @endsection
@@ -236,7 +206,7 @@
                 resourceType: 'lumber',
                 isMoving: false,
                 direction: 'toResource',
-                hp: 100,
+                hp: 1,
                 maxHp: 100,
                 isDead: false
             };
@@ -275,7 +245,7 @@
                 resourceType: 'gold',
                 isMoving: false,
                 direction: 'toResource',
-                hp: 100,
+                hp: 1,
                 maxHp: 100
             };
             const rocketCenter = getElementCenter($('#rocket'));
@@ -726,18 +696,17 @@
 
             if (lumberGoblins.length < maxGoblins) {
                 // Can buy new goblin
-                $('#buy-lumber-goblin').text('Buy');
-                $('#lumber-goblin-cost').text(lumberGoblinCost);
+                $('#buy-lumber-goblin').html(`Buy - <span id="lumber-goblin-cost">${lumberGoblinCost}</span> 💰`);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinCost);
             } else if (deadLumberGoblins.length > 0) {
                 // Can resurrect dead goblin
-                $('#buy-lumber-goblin').text('Resurrect');
-                $('#lumber-goblin-cost').text(lumberGoblinResurrectCost);
+                $('#buy-lumber-goblin').html(`Resurrect - <span id="lumber-goblin-cost">${lumberGoblinResurrectCost}</span> 💰`);
                 $('#buy-lumber-goblin').prop('disabled', resources.gold < lumberGoblinResurrectCost);
             } else {
                 // Cannot buy or resurrect
                 $('#buy-lumber-goblin').prop('disabled', true);
             }
+
 
             // Update the goblin count display
             $('#lumber-goblin-count').text(aliveLumberGoblins.length);
@@ -749,13 +718,11 @@
 
             if (goldGoblins.length < maxGoblins) {
                 // Can buy new goblin
-                $('#buy-gold-goblin').text('Buy');
-                $('#gold-goblin-cost').text(goldGoblinCost);
+                $('#buy-gold-goblin').html(`Buy - <span id="gold-goblin-cost">${goldGoblinCost}</span> 🌲`);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinCost);
             } else if (deadGoldGoblins.length > 0) {
                 // Can resurrect dead goblin
-                $('#buy-gold-goblin').text('Resurrect');
-                $('#gold-goblin-cost').text(goldGoblinResurrectCost);
+                $('#buy-gold-goblin').html(`Resurrect - <span id="gold-goblin-cost">${goldGoblinResurrectCost}</span> 🌲`);
                 $('#buy-gold-goblin').prop('disabled', resources.lumber < goldGoblinResurrectCost);
             } else {
                 // Cannot buy or resurrect
