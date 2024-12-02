@@ -10,7 +10,14 @@
             <div class="row">
                 <!-- Map Section -->
                 <div class="col-md-12 position-relative">
+
+
                     <div class="map-section rounded border border-1 border-primary">
+                        <!-- Score Display -->
+                        <div class="score-display bg-primary p-1 rounded">
+                            🏆 Score: <span id="score-count">0</span>
+                        </div>
+
                         <!-- Start Screen Overlay -->
                         <div id="start-screen" class="overlay">
                             <div class="overlay-content">
@@ -25,6 +32,9 @@
                         </div>
                         <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.webp"></div>
                         <!-- Goblins will be dynamically added here -->
+
+                        <!-- Message Container -->
+                        <div id="message-container" class="message-container"></div>
                     </div>
 
 
@@ -133,7 +143,7 @@
                         </tbody>
                     </table>
                     <div class="mt-3 small text-white">
-                        Overall goal is to upgrade your Rocket.
+                        Get as high score as possible!
                         <br />Everytime rocket is upgraded Rafa is trying even harder to rug you.
                     </div>
                 </div>
@@ -141,12 +151,38 @@
         </div>
     </div>
 @endsection
+<style>
+    .score-display {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        z-index: 1000;
+    }
+    .message-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        background-color: #32423b; /* Only visible when it has content */
+        display: none; /* Ensures it doesn't show up unless explicitly displayed */
+    }
+
+    /* When content is added and shown, padding can appear dynamically */
+    .message-container.alert {
+        padding: 10px 15px;
+    }
+
+</style>
 
 @push('scripts')
     <script>
         // Game State
         let resources = { lumber: 0, gold: 0 };
         let gameRunning = false;
+        let score = 0;
 
         // Goblin Data
         let lumberGoblins = [];
@@ -196,6 +232,13 @@
             addGoldGoblin();
         }
 
+        let gameStartTime;
+
+        $('#start-game').click(() => {
+            // Existing code...
+            gameStartTime = Date.now(); // Store game start time
+        });
+
         // Add Goblin Functions
         function addLumberGoblin() {
             if (lumberGoblins.length >= maxGoblins) {
@@ -211,7 +254,7 @@
                 position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 100,
+                hp: 1,
                 maxHp: 100,
                 isDead: false
             };
@@ -249,7 +292,7 @@
                 position: { top: '80%', left: '50%' },
                 isMoving: false,
                 direction: 'toResource',
-                hp: 100,
+                hp: 1,
                 maxHp: 100
             };
             goblin.css({
@@ -500,6 +543,9 @@
                     $('#lumber-goblin-cost').text(lumberGoblinCost);
                     addLumberGoblin();
                     updateButtons();
+
+                    score += 20;
+                    updateScoreDisplay();
                 }
             } else if (deadLumberGoblins.length > 0) {
                 // Resurrect a dead goblin
@@ -538,6 +584,9 @@
                     $('#gold-goblin-cost').text(goldGoblinCost);
                     addGoldGoblin();
                     updateButtons();
+
+                    score += 20;
+                    updateScoreDisplay();
                 }
             } else if (deadGoldGoblins.length > 0) {
                 // Resurrect a dead goblin
@@ -578,6 +627,10 @@
                 $('#lumber-speed-level').text(lumberGoblinUpgrades.speedLevel);
                 $('#lumber-speed-cost').text(lumberGoblinUpgrades.speedCost);
                 updateButtons();
+
+                // Increment score
+                score += 10; // Adjust the value as needed
+                updateScoreDisplay();
             }
         });
 
@@ -595,6 +648,10 @@
                 $('#lumber-carry-level').text(lumberGoblinUpgrades.carryLevel);
                 $('#lumber-carry-cost').text(lumberGoblinUpgrades.carryCost);
                 updateButtons();
+
+                // Increment score
+                score += 10; // Adjust the value as needed
+                updateScoreDisplay();
             }
         });
 
@@ -616,6 +673,10 @@
                 $('#lumber-resistance-cost').text(lumberGoblinUpgrades.resistanceCost);
                 $('#lumber-resistance-cost-lumber').text(lumberGoblinUpgrades.resistanceCostLumber);
                 updateButtons();
+
+                // Increment score
+                score += 10; // Adjust the value as needed
+                updateScoreDisplay();
             }
         });
 
@@ -633,6 +694,10 @@
                 $('#gold-speed-level').text(goldGoblinUpgrades.speedLevel);
                 $('#gold-speed-cost').text(goldGoblinUpgrades.speedCost);
                 updateButtons();
+
+                // Increment score
+                score += 10; // Adjust the value as needed
+                updateScoreDisplay();
             }
         });
 
@@ -650,6 +715,10 @@
                 $('#gold-carry-level').text(goldGoblinUpgrades.carryLevel);
                 $('#gold-carry-cost').text(goldGoblinUpgrades.carryCost);
                 updateButtons();
+
+                // Increment score
+                score += 10; // Adjust the value as needed
+                updateScoreDisplay();
             }
         });
 
@@ -671,6 +740,10 @@
                 $('#gold-resistance-cost').text(goldGoblinUpgrades.resistanceCost);
                 $('#gold-resistance-cost-gold').text(goldGoblinUpgrades.resistanceCostGold);
                 updateButtons();
+
+                // Increment score
+                score += 10; // Adjust the value as needed
+                updateScoreDisplay();
             }
         });
 
@@ -687,7 +760,15 @@
                 rocketCost.gold = Math.floor(rocketCost.gold * 1.3);
                 $('#rocket-cost-lumber').text(rocketCost.lumber);
                 $('#rocket-cost-gold').text(rocketCost.gold);
-                alert('Rocket upgraded to level ' + rocketLevel + '!');
+                showMessage('Rocket upgraded to level ' + rocketLevel + '!');
+
+                // Increment score with time bonus
+                let timeElapsed = (Date.now() - gameStartTime) / 1000; // Time in seconds
+                let baseScore = 1000; // Base score for rocket upgrade
+                let timeBonus = Math.max(0, (1000 - timeElapsed)); // Faster upgrades give more score
+                score += baseScore + timeBonus;
+                updateScoreDisplay();
+
                 updateButtons();
                 updateLevelDisplays();
                 clearTimeout(enemyInterval);
@@ -900,40 +981,53 @@
         // End Game Function
         function endGame() {
             gameRunning = false;
-            clearInterval(enemyInterval);
+            clearTimeout(enemyInterval);
             $('#pause-game').hide();
 
-            // Prompt the user to enter their name
-            let playerName = prompt('Game Over! You reached Rocket Level ' + rocketLevel + '.\nEnter your name to save your score:');
+            // Show the final score in the modal
+            $('#final-score').text(score);
 
-            if (playerName !== null && playerName.trim() !== '') {
-                // Send the score to the server via AJAX
-                $.ajax({
-                    url: '/scores',
-                    method: 'POST',
-                    data: {
-                        name: playerName.trim(),
-                        rocket_level: rocketLevel,
-                        _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
-                    },
-                    success: function(response) {
-                        alert('Score saved successfully!');
-                        resetGame();
-                    },
-                    error: function(xhr) {
-                        alert('An error occurred while saving your score.');
-                        resetGame();
-                    }
-                });
-            } else {
-                // User didn't enter a name or canceled
-                resetGame();
-            }
+            // Show the game over modal
+            $('#game-over-modal').modal('show');
+
+            // Handle submit score button
+            $('#submit-score-button').off('click').on('click', function () {
+                let playerName = $('#player-name-input').val().trim();
+                if (playerName !== '') {
+                    // Disable button and show spinner
+                    $(this).prop('disabled', true);
+                    $(this).html('Submitting <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+
+                    $.ajax({
+                        url: '/scores',
+                        method: 'POST',
+                        data: {
+                            name: playerName,
+                            score: score,
+                            wallet_address: 'AvvaZLwEssRLTBPDzbjo59X8Q7WAagRBg1Z9R5nL9iSj', // Placeholder for now
+                            _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                        },
+                        success: function (response) {
+                            console.log('Score submitted successfully:', response);
+                            $('#game-over-modal').modal('hide');
+                            resetGame();
+                        },
+                        error: function (xhr) {
+                            console.error('Score submission error:', xhr.responseText);
+                            alert('An error occurred while saving your score.');
+                            $('#submit-score-button').prop('disabled', false);
+                            $('#submit-score-button').html('Submit Score');
+                        }
+                    });
+                }
+            });
+
 
             // Update the Start Game button text
             $('#start-game').text('Restart Game');
             $('#start-screen').show();
         }
+
 
         // Reset Game State
         function resetGame() {
@@ -941,6 +1035,10 @@
             resources = { lumber: 0, gold: 0 };
             lumberGoblins = [];
             goldGoblins = [];
+
+            score = 0; // Reset score
+            displayedScore = 0; // Reset displayed score
+            $('#score-count').text(score); // Update score display
 
             lumberGoblinUpgrades = {
                 speedLevel: 1,
@@ -1079,6 +1177,35 @@
             }
         }
 
+        let displayedScore = 0;
+
+        function updateScoreDisplay() {
+            $('#score-count').stop(true, true);
+
+            // Start from displayedScore or score
+            displayedScore = parseInt($('#score-count').text()) || 0;
+
+            $({ scoreValue: displayedScore }).animate({ scoreValue: score }, {
+                duration: 500,
+                easing: 'swing',
+                step: function () {
+                    $('#score-count').text(Math.round(this.scoreValue));
+                },
+                complete: function () {
+                    displayedScore = score;
+                }
+            });
+        }
+
+        function showMessage(message) {
+            const messageDiv = $('<div class="text-center bg-tertiary text-white p-4 rounded" role="alert"></div>').text(message);
+            const messageContainer = $('#message-container');
+
+            messageContainer.html(messageDiv); // Add the new message
+            messageContainer.fadeIn(500).delay(1500).fadeOut(500, function () {
+                $(this).empty(); // Clear the content after fading out
+            });
+        }
 
     </script>
 @endpush

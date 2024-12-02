@@ -59,6 +59,26 @@
             @yield('content')
         </div>
 
+        <!-- Game Over Modal -->
+        <div class="modal fade" id="game-over-modal" tabindex="-1" role="dialog" aria-labelledby="gameOverModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-secondary text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gameOverModalLabel">Game Over!</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>You achieved a score of <span id="final-score"></span>.</p>
+                        <p>Enter your name to save your score:</p>
+                        <input type="text" id="player-name-input" class="form-control" placeholder="Your Name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="submit-score-button" class="btn btn-primary">Submit Score</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         @include('web.partials.toast')
         @include('web.partials.footer')

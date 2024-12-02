@@ -9,5 +9,9 @@ class Score extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'rocket_level'];
+    protected $fillable = [
+        'name',
+        'score',
+        'wallet_address',
+    ];
 }

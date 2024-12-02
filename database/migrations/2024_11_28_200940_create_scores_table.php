@@ -11,7 +11,8 @@ class CreateScoresTable extends Migration
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('rocket_level');
+            $table->integer('score')->default(0); // New column for score
+            $table->string('wallet_address')->default('dummy_wallet_address');
             $table->timestamps();
         });
     }

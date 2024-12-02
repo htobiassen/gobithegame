@@ -3,31 +3,9 @@
     );
     caret-color: transparent;
 }
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 body {
     font-family: $body-font-family;
 }
-.bg-opacity-dark {
-    background-color: rgba(0, 0, 0, 0.2) !important; /* 50% opacity white background */
-}
-.table-fourthiary tbody tr td {
-    background-color: transparent !important; /* Set the background to transparent */
-}
-.table-fourthiary thead tr th {
-    background-color: transparent !important; /* Set the background to transparent */
-}
-
-
 .bg-main {
     position: relative;
     background-image: url('/public/images/backgrounds/main.webp');
@@ -51,15 +29,6 @@ body {
     z-index: -1;
 }
 
-.card-hover {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    cursor: pointer;
-}
-
-.card-hover:hover {
-    transform: scale(1.05); /* Makes the card a little bigger */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for better visual feedback */
-}
 .img-hover {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     cursor: pointer;
@@ -69,52 +38,6 @@ body {
     transform: scale(1.05); /* Makes the card a little bigger */
 }
 
-.border-headline {
-    position: absolute;
-    top: -28px;
-    left: 100px;
-    transform: translateX(-50%);
-    background: #fff;
-    z-index: 999;
-}
-.copied-tooltip {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    //bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    /* Fade in */
-    opacity: 0;
-    transition: opacity 0.3s, visibility 0s linear 0.3s;
-}
-
-.copied-tooltip.show {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s;
-}
-
-.image-container {
-    height: 350px; /* Adjust based on your needs */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Ensures no image spills out */
-}
-
-@include media-breakpoint-up(lg) {
-    .image-container {
-        height: 130px; /* Adjust based on your needs */
-    }
-}
-
 .game-container {
     max-width: 1310px;
 }
@@ -122,8 +45,6 @@ body {
 .table-sm > :not(caption) > * > * {
     padding: 0.3rem 0.75rem;
 }
-
-
 .img-mine {
     height: 120px !important;
 }
@@ -154,7 +75,8 @@ body {
     height: 500px;
     position: relative;
     overflow: hidden;
-    background-image: url("/public/images/game_assets/game_background_1280.jpg");
+    background-image: url("/public/images/game_assets/game_background_363.jpg");
+    background-size: cover;
 }
 @media (min-width: 768px) {
     .map-section {
