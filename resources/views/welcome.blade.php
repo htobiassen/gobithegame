@@ -22,7 +22,10 @@
                                 <h2 id="game-over-message">Welcome to the Game!</h2>
                                 <div class="mb-3">
                                     <button id="start-game-free" class="btn btn-tertiary btn-lg me-2">Play Free</button>
-                                    <button id="start-game-paid" class="btn btn-primary btn-lg">Compete for $GOBI</button>
+                                    <button id="start-game-paid" class="btn btn-primary btn-sm" disabled>
+                                        Compete for $GOBI
+                                        <span class="small d-block">Coming soon!</span>
+                                    </button>
                                 </div>
                                 <div id="wallet-status" class="mb-3"></div>
                             </div>
