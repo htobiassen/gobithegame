@@ -13,6 +13,9 @@ class CreateScoresTable extends Migration
             $table->string('name');
             $table->integer('score')->default(0); // New column for score
             $table->string('wallet_address')->default('dummy_wallet_address');
+            $table->foreignId('season_id')->nullable()->constrained('seasons')->onDelete('set null');
+            $table->boolean('is_paid')->default(false);
+            $table->decimal('payment_amount', 20, 8)->default(0);
             $table->timestamps();
         });
     }

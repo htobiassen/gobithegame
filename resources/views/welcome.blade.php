@@ -19,10 +19,15 @@
                         <!-- Start Screen Overlay -->
                         <div id="start-screen" class="overlay">
                             <div class="overlay-content">
-                                <h2 id="game-over-message"></h2>
-                                <button id="start-game" class="btn btn-tertiary btn-lg">Start Game</button>
+                                <h2 id="game-over-message">Welcome to the Game!</h2>
+                                <div class="mb-3">
+                                    <button id="start-game-free" class="btn btn-tertiary btn-lg me-2">Play Free</button>
+                                    <button id="start-game-paid" class="btn btn-primary btn-lg">Compete for $GOBI</button>
+                                </div>
+                                <div id="wallet-status" class="mb-3"></div>
                             </div>
                         </div>
+
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
                         <div id="mine" class="map-item mine"></div>
@@ -119,6 +124,7 @@
 @endsection
 @push('scripts')
     <script>
+
         // Game State
         let resources = { lumber: 0, gold: 0 };
         let gameRunning = false;
@@ -173,6 +179,16 @@
         }
 
         let gameStartTime;
+
+        // Blockchain variables
+        let connection = new window.solanaWeb3.Connection(
+            // window.solanaWeb3.clusterApiUrl('mainnet-beta'),
+            window.solanaWeb3.clusterApiUrl('devnet'),
+            'confirmed'
+        );
+
+        const DEV_WALLET = '8w9BriDSc57tm7RYMPHVpRkD3CoGUqBuiQs2kNqQouzg'; // Replace with your actual dev wallet address
+        const ALLOCATION_PERCENTAGE = 75; // Adjustable percentage
 
         $('#start-game').click(() => {
             // Existing code...
@@ -342,7 +358,14 @@
                             // Deliver resources
                             resources[resourceType] += carryAmount;
                             $('#' + resourceType + '-count').text(resources[resourceType]);
-                            displayCounter(goblin, '+' + carryAmount);
+
+                            // Add colored counter for delivered resources
+                            if (resourceType === 'gold') {
+                                displayCounter(goblin, '+' + carryAmount, '#ffc107'); // Yellow for gold
+                            } else {
+                                displayCounter(goblin, '+' + carryAmount, '#28a745'); // Green for lumber
+                            }
+
                             updateButtons();
                             goblinData.direction = 'toResource';
                             goblinLoop();
@@ -355,16 +378,25 @@
         }
 
         // Display Counter Animation
-        function displayCounter(goblin, text) {
-            const counter = $('<div class="delivery-counter text-white fs-5"></div>').text(text);
+        function displayCounter(goblin, text, color = '#28a745') { // Default color is green
+            const counter = $('<div class="delivery-counter"></div>').text(text);
+
             const offset = goblin.offset();
-            counter.css({ top: offset.top - 20, left: offset.left + 20 });
+            counter.css({
+                position: 'absolute',
+                top: offset.top - 20,
+                left: offset.left + 20,
+                color: color,
+                fontWeight: 'bold', // Make it visually distinct
+                zIndex: 1000 // Ensure it appears on top of other elements
+            });
+
             $('body').append(counter);
             counter.animate({ top: '-=20', opacity: 0 }, 1000, () => counter.remove());
         }
 
-        // Start Game
-        $('#start-game').click(() => {
+        // Handle Play Free
+        $('#start-game-free').click(() => {
             gameRunning = true;
             $('#start-screen').hide();
             $('#pause-game').show();
@@ -372,6 +404,61 @@
             goldGoblins.forEach(g => startGoblin(g));
             startEnemySpawn();
             updateButtons();
+            gameStartTime = Date.now(); // Start time
+        });
+
+        // Handle Play Paid
+        $('#start-game-paid').click(async () => {
+            // Check if Phantom is installed and wallet is connected
+            if (window.solana && window.solana.isPhantom) {
+                if (!window.walletPublicKey) {
+                    alert('Please connect your wallet using the button in the navbar.');
+                    return;
+                }
+
+                try {
+                    // Define the amount to send (e.g., 0.01 SOL)
+                    const amountSOL = 0.0001; // Adjust as needed
+
+                    // Fetch the latest blockhash
+                    const { blockhash } = await connection.getLatestBlockhash('finalized');
+
+                    // Create a transaction to send SOL to the dev wallet
+                    const transaction = new window.solanaWeb3.Transaction({
+                        recentBlockhash: blockhash, // Set the required blockhash
+                        feePayer: window.solana.publicKey, // Wallet paying the transaction fees
+                    }).add(
+                        window.solanaWeb3.SystemProgram.transfer({
+                            fromPubkey: window.solana.publicKey,
+                            toPubkey: new window.solanaWeb3.PublicKey(DEV_WALLET),
+                            lamports: window.solanaWeb3.LAMPORTS_PER_SOL * amountSOL,
+                        })
+                    );
+
+                    // Send transaction
+                    const signedTransaction = await window.solana.signTransaction(transaction);
+                    const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+                    await connection.confirmTransaction(signature, 'confirmed');
+
+                    // Start the game as paid
+                    gameRunning = true;
+                    $('#start-screen').hide();
+                    $('#pause-game').show();
+                    lumberGoblins.forEach(g => startGoblin(g));
+                    goldGoblins.forEach(g => startGoblin(g));
+                    startEnemySpawn();
+                    updateButtons();
+                    gameStartTime = Date.now(); // Start time
+
+                    // Optionally, notify the backend about the payment
+                    // However, since the payment is handled manually, the backend relies on score submission to update the prize pool
+                } catch (err) {
+                    console.error(err);
+                    alert('Failed to connect to wallet or complete transaction.');
+                }
+            } else {
+                alert('Phantom Wallet not found. Please install Phantom to play paid.');
+            }
         });
 
         // Pause Game
@@ -886,7 +973,6 @@
             }
         }
 
-        // End Game Function
         function endGame() {
             gameRunning = false;
             clearTimeout(enemyInterval);
@@ -906,13 +992,19 @@
                     $(this).prop('disabled', true);
                     $(this).html('Submitting <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
 
+                    // Determine if the playthrough is paid
+                    const isPaid = walletPublicKey !== null; // Replace walletPublicKey with your actual wallet connection logic
+                    const paymentAmount = isPaid ? 0.01 : 0; // Replace 0.01 with the actual payment amount for paid playthroughs
+
                     $.ajax({
                         url: '/scores',
                         method: 'POST',
                         data: {
                             name: playerName,
                             score: score,
-                            wallet_address: 'AvvaZLwEssRLTBPDzbjo59X8Q7WAagRBg1Z9R5nL9iSj', // Placeholder for now
+                            wallet_address: walletPublicKey || 'free_player',
+                            is_paid: isPaid,
+                            payment_amount: paymentAmount,
                             _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
                         },
                         success: function (response) {
@@ -929,7 +1021,6 @@
                     });
                 }
             });
-
 
             // Update the Start Game button text
             $('#start-game').text('Restart Game');

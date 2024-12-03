@@ -13,5 +13,13 @@ class Score extends Model
         'name',
         'score',
         'wallet_address',
+        'season_id',
+        'is_paid',
+        'payment_amount',
     ];
+
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+    }
 }

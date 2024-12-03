@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { resolve } from 'path';
 
 export default defineConfig({
@@ -16,6 +17,22 @@ export default defineConfig({
     resolve: {
         alias: {
             '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
-        }
+            buffer: 'buffer/', // Alias for buffer
+        },
+    },
+    optimizeDeps: {
+        esbuildOptions: {
+            // Node.js global to browser global polyfills
+            define: {
+                global: 'globalThis',
+            },
+            // Enable esbuild polyfill plugins
+            plugins: [
+                NodeGlobalsPolyfillPlugin({
+                    process: true,
+                    buffer: true,
+                }),
+            ],
+        },
     },
 });

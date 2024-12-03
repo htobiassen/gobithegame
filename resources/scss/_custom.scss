@@ -366,3 +366,7 @@ table td {
 .table-fourthiary thead tr th {
     background-color: transparent !important; /* Set the background to transparent */
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: $colors-primary !important;
+}

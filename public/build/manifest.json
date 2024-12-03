@@ -12,18 +12,18 @@
     "src": "public/images/game_assets/game_background_363.jpg"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DR5fYs7G.css",
+    "file": "assets/app-qcxIh6Wd.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DppKq5aY.js",
+    "file": "assets/app-BhG0_Zfo.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-BRl5rNyA.css",
+    "file": "assets/app-D6ZXYC1I.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }
