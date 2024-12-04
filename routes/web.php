@@ -11,7 +11,6 @@ Route::get('/', function () {
 
 Route::get('/leaderboard', [ScoreController::class, 'index'])->name('leaderboard');
 Route::post('/scores', [ScoreController::class, 'store'])->name('scores.store');
-Route::resource('seasons', SeasonController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
