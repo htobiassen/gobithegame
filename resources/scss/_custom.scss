@@ -370,3 +370,20 @@ table td {
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     background-color: $colors-primary !important;
 }
+
+.rocket-hp-bar-container {
+    position: absolute;
+    top: -10px;
+    width: 100%;
+    height: 5px;
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+.rocket-hp-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #28a745;
+    border-radius: 3px;
+    transition: width 0.3s;
+}

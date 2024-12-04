@@ -34,7 +34,12 @@
                         <!-- Game Elements -->
                         <div id="forest" class="map-item forest"></div>
                         <div id="mine" class="map-item mine"></div>
-                        <div id="rocket" class="map-item rocket"><img class="img-rocket" src="../../images/game_assets/rocket.webp"></div>
+                        <div id="rocket" class="map-item rocket">
+                            <div class="rocket-hp-bar-container">
+                                <div id="rocket-hp-bar" class="rocket-hp-bar"></div>
+                            </div>
+                            <img class="img-rocket" src="../../images/game_assets/rocket.webp">
+                        </div>
                         <!-- Goblins will be dynamically added here -->
 
                         <!-- Message Container -->
@@ -108,6 +113,10 @@
                                 <button id="upgrade-rocket" class="btn btn-sm btn-fourthiary">
                                     Upgrade <span id="rocket-cost-lumber">70</span>🌲 <span id="rocket-cost-gold">70</span>💰
                                 </button>
+                                <button id="upgrade-rocket-resistance" class="btn btn-sm btn-fourthiary">
+                                    Resistance (<span id="rocket-resistance-level">1</span>) <span id="rocket-resistance-cost-lumber">50</span>🌲 <span id="rocket-resistance-cost-gold">50</span>💰
+                                </button>
+                                <button id="repair-rocket" class="btn btn-sm btn-primary">Repair</button>
                             </div>
                         </div>
                     </div>
@@ -121,6 +130,7 @@
                 <li><strong>Gather Resources:</strong> Goblins gather <span class="text-fourthiary">gold 💰</span> and <span class="text-fourthiary">lumber 🌲</span>.</li>
                 <li><strong>Upgrade:</strong> Invest resources to improve goblins’ speed, carry capacity, and resistance.</li>
                 <li><strong>Score:</strong> Earn points for upgrades. Submit your score to compete!</li>
+                <li><strong>Lose:</strong> If either all goblins or your rocket dies!</li>
             </ul>
         </div>
     </div>
@@ -171,6 +181,12 @@
             lumber: 70,
             gold: 70
         };
+
+        let rocketHP = 100;
+        let maxRocketHP = 100;
+        let rocketResistanceLevel = 1;
+        let rocketResistanceCostLumber = 50;
+        let rocketResistanceCostGold = 50;
 
         // Max Goblins
         const maxGoblins = 3;
@@ -854,6 +870,19 @@
             // Rocket Upgrade Button
             $('#upgrade-rocket').prop('disabled', resources.lumber < rocketCost.lumber || resources.gold < rocketCost.gold);
 
+            // Repair button
+            const canRepair = resources.lumber >= 2 && resources.gold >= 2 && rocketHP < maxRocketHP;
+            $('#repair-rocket').prop('disabled', !canRepair);
+
+            // Update Rocket Resistance Upgrade Button
+            const canUpgradeResistance = resources.lumber >= rocketResistanceCostLumber && resources.gold >= rocketResistanceCostGold;
+            $('#upgrade-rocket-resistance').prop('disabled', !canUpgradeResistance);
+
+            // Update resistance level display
+            $('#rocket-resistance-level').text(rocketResistanceLevel);
+            $('#rocket-resistance-cost-lumber').text(rocketResistanceCostLumber);
+            $('#rocket-resistance-cost-gold').text(rocketResistanceCostGold);
+
             updateLevelDisplays();
         }
 
@@ -929,10 +958,30 @@
             // Store enemy and its animation
             enemies.push(enemyObj);
 
-            // Enemy attacks a random goblin
+            // Enemy attacks at halfway point
             enemyObj.attackTimeout = setTimeout(() => {
-                attackGoblin(enemy);
+                attackGoblinOrRocket(enemy);
             }, 4000); // Enemy attacks at halfway point
+        }
+
+        function attackGoblinOrRocket(enemyElement) {
+            const aliveGoblins = lumberGoblins.concat(goldGoblins).filter(g => !g.isDead);
+            const targets = [...aliveGoblins, { isRocket: true }]; // Include the rocket as a potential target
+
+            if (targets.length === 0) {
+                endGame();
+                return;
+            }
+
+            const target = targets[Math.floor(Math.random() * targets.length)];
+
+            if (target.isRocket) {
+                // Attack the rocket
+                attackRocket();
+            } else {
+                // Attack the goblin
+                attackGoblin(target);
+            }
         }
 
         function attackGoblin(enemy) {
@@ -978,10 +1027,48 @@
             }
         }
 
+        function attackRocket() {
+            // Show attack animation
+            const attackEffect = $('<div class="attack-effect">💥</div>');
+            const rocketPosition = $('#rocket').position();
+            attackEffect.css({
+                position: 'absolute',
+                top: rocketPosition.top,
+                left: rocketPosition.left,
+                fontSize: '30px',
+                color: 'red',
+                zIndex: 1000
+            });
+            $('.map-section').append(attackEffect);
+            setTimeout(() => attackEffect.remove(), 500);
+
+            // Calculate damage
+            let baseDamage = 25; // Base damage
+            let damage = Math.max(baseDamage - rocketResistanceLevel * 2, 5); // Minimum damage of 5
+
+            updateRocketHP(damage);
+        }
+
+
         function endGame() {
             gameRunning = false;
             clearTimeout(enemyInterval);
             $('#pause-game').hide();
+
+            // Stop all goblin animations
+            lumberGoblins.concat(goldGoblins).forEach(g => {
+                g.element.stop(true, true);
+                g.isMoving = false;
+            });
+
+            // Stop all enemy animations
+            enemies.forEach(e => {
+                e.element.stop(true, true);
+                if (e.attackTimeout) {
+                    clearTimeout(e.attackTimeout);
+                    e.attackTimeout = null;
+                }
+            });
 
             // Show the final score in the modal
             $('#final-score').text(score);
@@ -1108,6 +1195,17 @@
             // Remove all goblin elements
             $('.goblin').remove();
 
+            rocketHP = maxRocketHP;
+            $('#rocket-hp-bar').css('width', '100%');
+
+            rocketResistanceLevel = 1;
+            rocketResistanceCostLumber = 50;
+            rocketResistanceCostGold = 50;
+
+            $('#rocket-resistance-level').text(rocketResistanceLevel);
+            $('#rocket-resistance-cost-lumber').text(rocketResistanceCostLumber);
+            $('#rocket-resistance-cost-gold').text(rocketResistanceCostGold);
+
             // Clear enemy interval and remove enemies
             clearTimeout(enemyInterval);
             enemies.forEach(e => {
@@ -1209,6 +1307,124 @@
             messageContainer.fadeIn(500).delay(1500).fadeOut(500, function () {
                 $(this).empty(); // Clear the content after fading out
             });
+        }
+
+        function updateRocketHP(damage = 0) {
+            rocketHP = Math.max(0, rocketHP - damage);
+            const hpPercent = (rocketHP / maxRocketHP) * 100;
+            $('#rocket-hp-bar').css('width', `${hpPercent}%`);
+
+            if (rocketHP <= 0) {
+                endGame(); // Ends the game if rocket HP reaches 0
+            }
+        }
+
+        $('#upgrade-rocket-resistance').click(() => {
+            if (resources.lumber >= rocketResistanceCostLumber && resources.gold >= rocketResistanceCostGold) {
+                resources.lumber -= rocketResistanceCostLumber;
+                resources.gold -= rocketResistanceCostGold;
+                $('#lumber-count').text(resources.lumber);
+                $('#gold-count').text(resources.gold);
+
+                rocketResistanceLevel++;
+                $('#rocket-resistance-level').text(rocketResistanceLevel);
+
+                // Increase the cost for the next upgrade
+                rocketResistanceCostLumber = Math.floor(rocketResistanceCostLumber * 1.3);
+                rocketResistanceCostGold = Math.floor(rocketResistanceCostGold * 1.3);
+                $('#rocket-resistance-cost-lumber').text(rocketResistanceCostLumber);
+                $('#rocket-resistance-cost-gold').text(rocketResistanceCostGold);
+
+                updateButtons();
+
+                // Increment score
+                score += 50; // Adjust as needed
+                updateScoreDisplay();
+            }
+        });
+
+        let isRepairing = false;
+        let repairInterval = null;
+
+        $('#repair-rocket').click(() => {
+            if (isRepairing) {
+                stopRepair();
+            } else {
+                startRepair();
+            }
+        });
+
+        function startRepair() {
+            if (rocketHP >= maxRocketHP) {
+                alert('Rocket is already at full health!');
+                return;
+            }
+
+            // Change button text
+            $('#repair-rocket').text('Stop Repair');
+
+            isRepairing = true;
+
+            // Start repairing immediately
+            startRepairing();
+        }
+
+        function stopRepair() {
+            if (!isRepairing) return;
+
+            isRepairing = false;
+            $('#repair-rocket').text('Repair');
+
+            if (repairInterval) {
+                clearInterval(repairInterval);
+                repairInterval = null;
+            }
+        }
+        function startRepairing() {
+            repairInterval = setInterval(() => {
+                if (!isRepairing || rocketHP >= maxRocketHP) {
+                    stopRepair();
+                    return;
+                }
+
+                // Check if player has enough resources
+                if (resources.lumber < 1 || resources.gold < 1) {
+                    showMessage('Not enough resources to repair!');
+                    stopRepair();
+                    return;
+                }
+
+                // Deduct resources per second
+                resources.lumber -= 1;
+                resources.gold -= 1;
+                $('#lumber-count').text(resources.lumber);
+                $('#gold-count').text(resources.gold);
+
+                // Animate resource counters
+                animateResourceCounter('#lumber-count', -1);
+                animateResourceCounter('#gold-count', -1);
+
+                // Repair rocket HP per second
+                rocketHP = Math.min(maxRocketHP, rocketHP + 10);
+                updateRocketHP(0);
+
+                updateButtons();
+            }, 1000);
+        }
+
+        function animateResourceCounter(selector, amount) {
+            const counter = $('<div class="resource-change"></div>').text(amount > 0 ? '+' + amount : amount);
+            const offset = $(selector).offset();
+            counter.css({
+                position: 'absolute',
+                top: offset.top - 20,
+                left: offset.left + 20,
+                color: amount > 0 ? '#28a745' : '#dc3545', // Green for gain, red for loss
+                fontWeight: 'bold',
+                zIndex: 1000
+            });
+            $('body').append(counter);
+            counter.animate({ top: '-=20', opacity: 0 }, 1000, () => counter.remove());
         }
 
     </script>
