@@ -1388,24 +1388,24 @@
                 }
 
                 // Check if player has enough resources
-                if (resources.lumber < 1 || resources.gold < 1) {
+                if (resources.lumber < 2 || resources.gold < 2) {
                     showMessage('Not enough resources to repair!');
                     stopRepair();
                     return;
                 }
 
                 // Deduct resources per second
-                resources.lumber -= 1;
-                resources.gold -= 1;
+                resources.lumber -= 2;
+                resources.gold -= 2;
                 $('#lumber-count').text(resources.lumber);
                 $('#gold-count').text(resources.gold);
 
                 // Animate resource counters
-                animateResourceCounter('#lumber-count', -1);
-                animateResourceCounter('#gold-count', -1);
+                animateResourceCounter('#lumber-count', -2);
+                animateResourceCounter('#gold-count', -2);
 
                 // Repair rocket HP per second
-                rocketHP = Math.min(maxRocketHP, rocketHP + 10);
+                rocketHP = Math.min(maxRocketHP, rocketHP + 5);
                 updateRocketHP(0);
 
                 updateButtons();
