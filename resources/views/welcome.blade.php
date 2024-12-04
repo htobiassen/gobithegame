@@ -958,9 +958,13 @@
             setTimeout(() => attackEffect.remove(), 500);
 
             // Calculate damage based on rocket level
-            let baseDamage = 25 + (rocketLevel - 1) * 5; // Increase damage by 2 for each rocket level
+            let baseDamage = 25; // Base damage for level 1
+            let damageMultiplier = 1 + (rocketLevel - 1) * 0.1; // Increase multiplier per level (e.g., +10% per level)
+            let additionalDamage = Math.pow(rocketLevel - 1, 1.5) * 5; // Exponential growth for additional damage
+            let totalDamage = baseDamage * damageMultiplier + additionalDamage;
+
             let resistanceLevel = targetGoblin.resourceType === 'lumber' ? lumberGoblinUpgrades.resistanceLevel : goldGoblinUpgrades.resistanceLevel;
-            let damage = Math.max(baseDamage - resistanceLevel * 2, 5); // Minimum damage of 5
+            let damage = Math.max(totalDamage - resistanceLevel * 2, 5); // Minimum damage of 5
 
             targetGoblin.hp -= damage;
 
@@ -968,8 +972,6 @@
             let hpPercent = (targetGoblin.hp / targetGoblin.maxHp) * 100;
             $('#' + targetGoblin.id + '-hp-bar').css('width', hpPercent + '%');
 
-            // Check if goblin is dead
-            // Check if goblin is dead
             // Check if goblin is dead
             if (targetGoblin.hp <= 0) {
                 handleGoblinDeath(targetGoblin);

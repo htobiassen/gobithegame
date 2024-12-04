@@ -42,6 +42,12 @@ class ScoreController extends Controller
     // Store a new score
     public function store(Request $request)
     {
+        // Cast `is_paid` to a boolean before validation
+        $request->merge([
+            'is_paid' => filter_var($request->input('is_paid'), FILTER_VALIDATE_BOOLEAN),
+        ]);
+
+        // Validate the input
         $request->validate([
             'name' => 'required|string|max:255',
             'score' => 'required|integer',
