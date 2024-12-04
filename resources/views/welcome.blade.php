@@ -19,12 +19,12 @@
                         <!-- Start Screen Overlay -->
                         <div id="start-screen" class="overlay">
                             <div class="overlay-content">
-                                <h2 id="game-over-message">Welcome to the Game!</h2>
+                                <h2 id="game-over-message">Welcome to the $GOBI Game!</h2>
                                 <div class="mb-3">
-                                    <button id="start-game-free" class="btn btn-tertiary btn-lg me-2">Play Free</button>
-                                    <button id="start-game-paid" class="btn btn-primary btn-sm" disabled>
-                                        Compete for $GOBI
-                                        <span class="small d-block">Coming soon!</span>
+                                    <button id="start-game-free" class="btn btn-tertiary btn-lg w-100 mb-3">Play for Free</button>
+                                    <button id="start-game-paid" class="btn btn-primary btn-lg w-100" disabled>
+                                        Compete for $GOBI <img src="../../images/game_assets/phantom_gobi.webp" height="50px" class="float-end">
+                                        <span class="small d-block">(Coming soon!)</span>
                                     </button>
                                 </div>
                                 <div id="wallet-status" class="mb-3"></div>
