@@ -5,7 +5,7 @@
                 <div class="fw-bold text-uppercase text-tertiary mb-3">
                     $GOBI official channels
                 </div>
-                <a href="https://twitter.com/gobixyz" title="X" class="me-3 text-decoration-none text-tertiary" target="_blank">
+                <a href="https://x.com/GverseATO" title="X" class="me-3 text-decoration-none text-tertiary" target="_blank">
                     <i class="fa-brands fa-x-twitter fs-5 text-tertiary"></i>
                 </a>
                 <a href="https://t.me/GOBIversecommunity" title="Telegram" class="me-3 text-decoration-none text-tertiary" target="_blank">
