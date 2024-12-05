@@ -783,6 +783,28 @@
             }
         });
 
+        function updateRocketImage() {
+            const rocketImage = $(".img-rocket");
+            let newSrc;
+
+            if (rocketLevel <= 2) {
+                newSrc = "../../images/game_assets/rocket.webp";
+            } else if (rocketLevel >= 3 && rocketLevel <= 5) {
+                newSrc = "../../images/game_assets/rocket_lvl_3.webp";
+            } else {
+                newSrc = "../../images/game_assets/rocket_lvl_6.webp";
+            }
+
+            // Only change the image if it's different
+            if (rocketImage.attr("src") !== newSrc) {
+                // Add animation effect before changing the image
+                rocketImage.fadeOut(300, () => {
+                    rocketImage.attr("src", newSrc);
+                    rocketImage.fadeIn(300);
+                });
+            }
+        }
+
         // Upgrade Rocket
         $('#upgrade-rocket').click(() => {
             if (resources.lumber >= rocketCost.lumber && resources.gold >= rocketCost.gold) {
@@ -807,6 +829,7 @@
 
                 updateButtons();
                 updateLevelDisplays();
+                updateRocketImage();
                 clearTimeout(enemyInterval);
                 startEnemySpawn();
             }

@@ -11,6 +11,22 @@
     "file": "assets/game_background_363-CQu8ATNv.jpg",
     "src": "public/images/game_assets/game_background_363.jpg"
   },
+  "public/images/game_assets/walk_down_gold-64x64.png": {
+    "file": "assets/walk_down_gold-64x64-BDO5BvW2.png",
+    "src": "public/images/game_assets/walk_down_gold-64x64.png"
+  },
+  "public/images/game_assets/walk_down_wood-64x64.png": {
+    "file": "assets/walk_down_wood-64x64-8wL7pU8Z.png",
+    "src": "public/images/game_assets/walk_down_wood-64x64.png"
+  },
+  "public/images/game_assets/walk_up-64x64.png": {
+    "file": "assets/walk_up-64x64-B9XcmFyV.png",
+    "src": "public/images/game_assets/walk_up-64x64.png"
+  },
+  "public/images/game_assets/wood_cutting-64x64.png": {
+    "file": "assets/wood_cutting-64x64-C2UN8NJ1.png",
+    "src": "public/images/game_assets/wood_cutting-64x64.png"
+  },
   "resources/css/app.css": {
     "file": "assets/app-BR_cPP2H.css",
     "src": "resources/css/app.css",
@@ -23,7 +39,7 @@
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-BHyk1hGC.css",
+    "file": "assets/app-mbKS8T08.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }
