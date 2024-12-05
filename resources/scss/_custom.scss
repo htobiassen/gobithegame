@@ -45,6 +45,25 @@ body {
 .table-sm > :not(caption) > * > * {
     padding: 0.3rem 0.75rem;
 }
+
+.bg-opacity-dark {
+    background-color: rgba(0, 0, 0, 0.5) !important; /* 50% opacity white background */
+    border: 5px solid $colors-primary;
+    min-height: 600px;
+}
+.table-fourthiary tbody tr td {
+    background-color: transparent !important; /* Set the background to transparent */
+}
+.table-fourthiary thead tr th {
+    background-color: transparent !important; /* Set the background to transparent */
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: $colors-primary !important;
+}
+
+
+
 .img-rocket {
     height: 150px !important;
 }
@@ -123,28 +142,6 @@ body {
     user-select: none;
 }
 
-.collecting {
-    animation: vibrate 0.3s infinite;
-}
-
-@keyframes vibrate {
-    0% {
-        transform: translate(0, 0);
-    }
-    25% {
-        transform: translate(-1px, 1px);
-    }
-    50% {
-        transform: translate(1px, -1px);
-    }
-    75% {
-        transform: translate(-1px, -1px);
-    }
-    100% {
-        transform: translate(1px, 1px);
-    }
-}
-
 .delivery-counter {
     position: absolute;
     font-size: 16px;
@@ -155,6 +152,62 @@ body {
 button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+/* Base goblin styles */
+.goblin {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+}
+
+/* Walking Up Animation */
+.goblin.walk-up {
+    background-size: 448px 64px;
+    background-image: url('/public/images/game_assets/walk_up-64x64.png');
+    animation: walk-up 1s steps(7) infinite;
+}
+
+@keyframes walk-up {
+    from { background-position: 0 0; }
+    to { background-position: -448px 0; }
+}
+
+/* Walking Down with Gold */
+.goblin.walk-down-gold {
+    background-size: 448px 64px;
+    background-image: url('/public/images/game_assets/walk_down_gold-64x64.png');
+    animation: walk-down-gold 1s steps(7) infinite;
+}
+
+@keyframes walk-down-gold {
+    from { background-position: 0 0; }
+    to { background-position: -448px 0; }
+}
+
+/* Walking Down with Wood */
+.goblin.walk-down-wood {
+    background-size: 448px 64px;
+    background-image: url('/public/images/game_assets/walk_down_wood-64x64.png');
+    animation: walk-down-wood 1s steps(7) infinite;
+}
+
+@keyframes walk-down-wood {
+    from { background-position: 0 0; }
+    to { background-position: -448px 0; }
+}
+
+/* Wood Cutting Animation */
+.goblin.wood-cutting {
+    background-size: 640px 64px;
+    background-image: url('/public/images/game_assets/wood_cutting-64x64.png');
+    animation: wood-cutting 1s steps(10) infinite;
+}
+
+@keyframes wood-cutting {
+    from { background-position: 0 0; }
+    to { background-position: -640px 0; }
 }
 
 /* Overlay Styles */
@@ -195,26 +248,6 @@ button:disabled {
     right: 20px;
     font-size: 14px;
     font-weight: bold;
-}
-
-/* Health Bar Styles */
-.goblin-hp-bar-container {
-    position: absolute;
-    top: -10px; /* Adjust to move the bar directly above the goblin */
-    left: 50%;
-    transform: translateX(-30%);
-    width: 50px; /* Match the image width for alignment */
-    height: 5px;
-    background-color: #ccc; /* Background color for the container */
-    border: 1px solid #000;
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.goblin-hp-bar {
-    height: 100%;
-    width: 100%; /* Initially full */
-    background-color: red;
 }
 
 table.rounded {
@@ -339,38 +372,6 @@ table td {
     cursor: not-allowed;
 }
 
-@media (max-width: 768px) {
-    .upgrades-menu {
-        flex-direction: column;
-        align-items: stretch;
-        font-size: 11px;
-    }
-
-    .upgrade-item {
-        flex-direction: column;
-    }
-
-    .upgrade-controls {
-        justify-content: flex-start;
-    }
-}
-
-.bg-opacity-dark {
-    background-color: rgba(0, 0, 0, 0.5) !important; /* 50% opacity white background */
-    border: 5px solid $colors-primary;
-    min-height: 600px;
-}
-.table-fourthiary tbody tr td {
-    background-color: transparent !important; /* Set the background to transparent */
-}
-.table-fourthiary thead tr th {
-    background-color: transparent !important; /* Set the background to transparent */
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    background-color: $colors-primary !important;
-}
-
 .rocket-hp-bar-container {
     position: absolute;
     top: -10px;
@@ -389,3 +390,51 @@ table td {
     border-radius: 3px;
     transition: width 0.3s;
 }
+
+/* Health Bar Styles */
+.goblin-hp-bar-container {
+    position: absolute;
+    top: -10px; /* Adjust to move the bar directly above the goblin */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px; /* Match the image width for alignment */
+    height: 5px;
+    background-color: #ccc; /* Background color for the container */
+    border: 1px solid #000;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.goblin-hp-bar {
+    height: 100%;
+    width: 100%; /* Initially full */
+    background-color: red;
+}
+
+@media (max-width: 768px) {
+    .rocket-hp-bar-container {
+        left: 25px;
+        width: 80px;
+    }
+    .goblin-hp-bar-container {
+        left: 38%;
+        transform: translateX(-30%);
+    }
+    .upgrades-menu {
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 11px;
+    }
+
+    .upgrade-item {
+        flex-direction: column;
+    }
+
+    .upgrade-controls {
+        justify-content: flex-start;
+    }
+}
+
+
+
+

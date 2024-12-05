@@ -231,7 +231,7 @@
                 return;
             }
             const goblinId = 'lumber-goblin-' + (lumberGoblins.length + 1);
-            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.webp"></div>');
+            const goblin = $('<div class="goblin lumber-goblin" id="' + goblinId + '"></div>');
 
             const rocketCenter = getElementCenter($('#rocket'));
 
@@ -273,7 +273,7 @@
                 return;
             }
             const goblinId = 'gold-goblin-' + (goldGoblins.length + 1);
-            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"><img class="img-goblin" src="../../images/game_assets/gobi.webp"></div>');
+            const goblin = $('<div class="goblin gold-goblin" id="' + goblinId + '"></div>');
             const goblinData = {
                 id: goblinId,
                 element: goblin,
@@ -338,6 +338,20 @@
                 const standardDistance = 500; // Adjust as needed
                 let adjustedSpeed = baseSpeed * (distance / standardDistance);
 
+                // Remove previous animation classes
+                goblin.removeClass('walk-up walk-down-gold walk-down-wood wood-cutting');
+
+                // Set the appropriate animation class
+                if (goblinData.direction === 'toResource') {
+                    goblin.addClass('walk-up');
+                } else if (goblinData.direction === 'toRocket') {
+                    if (resourceType === 'lumber') {
+                        goblin.addClass('walk-down-wood');
+                    } else {
+                        goblin.addClass('walk-down-gold');
+                    }
+                }
+
                 // Start moving
                 goblin.animate(
                     {
@@ -347,6 +361,9 @@
                     adjustedSpeed,
                     'linear',
                     () => {
+                        // After reaching the destination, remove movement classes
+                        goblin.removeClass('walk-up walk-down-gold walk-down-wood');
+
                         if (goblinData.direction === 'toResource') {
                             goblin.addClass('collecting');
 
@@ -366,6 +383,7 @@
                                 });
                             } else {
                                 // For lumber goblins, just wait
+                                goblin.addClass('wood-cutting');
                                 setTimeout(() => {
                                     if (goblinData.isDead) return;
                                     goblin.removeClass('collecting');

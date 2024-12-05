@@ -37,6 +37,7 @@ $colors: map-remove($colors, "blue", "indigo", "purple", "pink", "teal", "cyan")
 @import "../../node_modules/bootstrap/scss/helpers";
 @import "../../node_modules/bootstrap/scss/utilities/api";
 @import "../../node_modules/bootstrap/scss/progress";
+@import "../../node_modules/bootstrap/scss/spinners";
 @import "../../node_modules/bootstrap/scss/button-group";
 
 
