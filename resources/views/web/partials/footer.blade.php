@@ -34,6 +34,9 @@
                 <a href="https://twitter.com/LukisHobby" title="X" class="me-3 text-decoration-none text-tertiary small" target="_blank">
                     HobbyLukis.DRiP <i class="fa-brands fa-x-twitter fs-5 text-tertiary"></i>
                 </a>
+                <a href="https://twitter.com/kokotnft" title="X" class="me-3 text-decoration-none text-tertiary small" target="_blank">
+                    Kokotnft <i class="fa-brands fa-x-twitter fs-5 text-tertiary"></i>
+                </a>
                 <div class="text-tertiary mt-3">
                     ©2024 GOBI THE GAME
                 </div>
