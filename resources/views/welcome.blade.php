@@ -1129,12 +1129,15 @@
                     const isPaid = walletPublicKey !== null; // Replace walletPublicKey with your actual wallet connection logic
                     const paymentAmount = isPaid ? 0.01 : 0; // Replace 0.01 with the actual payment amount for paid playthroughs
 
+                    // Round the score to the nearest integer before submission
+                    const roundedScore = Math.round(score);
+
                     $.ajax({
                         url: '/scores',
                         method: 'POST',
                         data: {
                             name: playerName,
-                            score: score,
+                            score: roundedScore,
                             wallet_address: walletPublicKey || 'free_player',
                             is_paid: isPaid,
                             payment_amount: paymentAmount,
